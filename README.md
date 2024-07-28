@@ -93,6 +93,7 @@ reg 0 sp
 ![Spike_1](https://github.com/user-attachments/assets/f48a3734-9a7c-423f-b454-9d066531b921)
 
 ## ASIC LAB3
+### Instructions
 ```
  ADD r5, r6, r7
  SUB r7, r5, r6
@@ -108,7 +109,7 @@ reg 0 sp
  LW r13, r11, 2
  SLL r15, r11, r2
 ```
-
+### Instruction Table
 | Operation       | Type | 32-bit Instruction        | Hexadecimal    |
 |-----------------|------|---------------------------|----------------|
 | ADD r5, r6, r7  | R    | 0000000 00111 00110 000 00101 0110011 | 0x00B30333  |
@@ -124,6 +125,7 @@ reg 0 sp
 | BEQ r0, r0, 15  | B    | 0000000 00000 00000 000 0000 1100011  | 0x00000063  |
 | LW r13, r11, 2  | I    | 000000000010 01011 010 01101 0000011  | 0x0025A293  |
 | SLL r15, r11, r2| R    | 0000000 00010 01011 001 01111 0110011 | 0x0025A933  |
+# Task2:
 
 There is some differences between RISCV ISA and Hardcoded ISA.So for the above Instructions the difference between RISCV ISA and Hardcoded ISA is
 | Operation           | Standard RISC-V ISA | Standard RISC-V ISA (Binary)               | Hardcoded ISA     | Hardcoded ISA (Binary)                  |
