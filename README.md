@@ -2,7 +2,7 @@
 <summary>ASIC Lab 1</summary>
 <br>
 
-## Aim:Create a C file and compile the file using both GCC Compiler and RISCV Compiler.##
+## Aim:Create a C file and compile the file using both GCC Compiler and RISCV Compiler. ##
 
 
   # **Step 1**:
