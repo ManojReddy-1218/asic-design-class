@@ -1,6 +1,8 @@
-### Task 1: ###
+<details>
+<summary>ASIC Lab 1</summary>
+<br>
 
-## **Aim:Create a C file and compile the file using both GCC Compiler and RISCV Compiler.** ##
+## Aim:Create a C file and compile the file using both GCC Compiler and RISCV Compiler.##
 
 
   # **Step 1**:
@@ -31,7 +33,11 @@
   Compile using Ofast Command and search for main function and calculate the no of steps taken,we can see that it took 12 steps.
 	
 ![task_2_2](https://github.com/user-attachments/assets/add80aeb-74cf-4ec5-a05d-95c4330d0206)
-# ASIC Lab2 
+</details>
+<details>
+<summary>ASIC Lab 2</summary> 
+<br>
+
 ## Aim: 
 To compile a file using RISCV compiler and verifying it with GCC compiler
 
@@ -91,8 +97,11 @@ reg 0 a2
 reg 0 sp
 ```
 ![Spike_1](https://github.com/user-attachments/assets/f48a3734-9a7c-423f-b454-9d066531b921)
+</details>
+<details>
+<summary>ASIC Lab 3</summary>
+<br>
 
-## ASIC LAB3
 ### Instructions
 ```
  ADD r5, r6, r7
@@ -181,8 +190,11 @@ Instruction 7: ADDI R12, R4, 5
 Instruction 8: BEQ R0, R0, 15
 ```
 ![8](https://github.com/user-attachments/assets/418e1f1d-2e18-4b53-bf43-b0e5c295da2e)
+</details>
+<details>
+<summary>ASIC Lab 4</summary>
+<br>
 
-# ASIC LAB 4 #
 ## Task:Compile a C application with GCC and RISC-V GCC ##
 ### Application Name : File Management System ###
 Description :
@@ -336,3 +348,4 @@ spike pk a.out
 ![4_2](https://github.com/user-attachments/assets/b73f7b93-8315-41a2-b8b2-33a1243a3ff2)
 
 ### Here we can see that outputs of both GCC and RISC-V GCC compiler matches ####
+</details>
