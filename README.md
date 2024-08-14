@@ -323,4 +323,16 @@ We can compile the program using GCC compiler by giving the following commands:
 gcc file.c
 ./a.out
 ```
-### Results for the GCC compiler ###
+### Results using the GCC compiler ###
+![4_1](https://github.com/user-attachments/assets/e3222a68-ba7f-4b16-8008-83f3edcd460f)
+
+### Compiling the program using RISC-V GCC Compiler ###
+We can compile the program using RISC-V GCC compiler by giving the following commands:
+```
+riscv64-unknown-elf-gcc -O1 -mabi=lp64 -march=rv64i file.c
+spike pk a.out
+```
+### Results using the RISC-V GCC compiler  ###
+![4_2](https://github.com/user-attachments/assets/b73f7b93-8315-41a2-b8b2-33a1243a3ff2)
+
+### Here we can see that outputs of both GCC and RISC-V GCC compiler matches ####
