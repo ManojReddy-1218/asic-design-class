@@ -349,3 +349,113 @@ spike pk a.out
 
 ### Here we can see that outputs of both GCC and RISC-V GCC compiler matches ####
 </details>
+<details>
+<summary>ASIC Lab5</summary>
+<br>
+
+# Building a five stage pipelining RISC-V processor core #
+This repository features a 5-stage pipelined RISC-V core built using TL-Verilog (Transactional Verilog). TL-Verilog enhances the design process by emphasizing data transactions and pipeline efficiency, making it ideal for creating scalable and modular hardware designs. This project demonstrates the implementation of a RISC-V core, highlighting the advantages of TL-Verilog in modern CPU design. Explore the code to see how TL-Verilog facilitates the construction of a pipelined architecture.
+<details>
+<summary>Digital Combinational Circuits Implementation</summary>
+<br>
+
+ ## Combinational Circuit Implementation ##
+ ### Inverter : ### 
+In a combinational circuit, an inverter (NOT gate) is a fundamental logic gate that flips the input signal, outputting the opposite value.
+ Here is the implementation of an Inverter using TL Verilog
+ #### Logic: ####
+ ```
+ $out = ! $in1;
+ ```
+![inverter](https://github.com/user-attachments/assets/dde0bec5-0422-4c53-ad5a-dd38dc229c88)
+### Vector : ###
+ In TL-Verilog, a vector represents a collection of bits grouped together, allowing for efficient manipulation of multi-bit signals. Vectors are essential for handling wide data paths and operations in 
+ transactional-level designs.
+ Here is the implementation of an Vector using TL Verilog
+ #### Logic: ####
+ ```
+ $out[4:0] = $in1[3:0] + $in2[3:0];
+ ```
+![Vector](https://github.com/user-attachments/assets/5820ce9a-51da-408e-b1c8-c37983576c40)
+### MUX : ###
+A multiplexer (MUX) is a digital switch that selects one of several input signals and routes it to a single output line based on control signals. It efficiently manages multiple data sources, enabling the implementation of complex routing and decision-making functions in circuits.
+Here is the implementation of an MUX using TL Verilog
+#### Logic: ####
+```
+$out[7:0] = $sel ? $in1[7:0] : $in2[7:0];
+```
+![Mux_vector](https://github.com/user-attachments/assets/047a4ce4-b505-48f0-a12f-782c345889d0)
+### Combinational Calculator : ###
+The combinational calculator is designed using a 4-to-1 multiplexer (MUX) and is capable of performing fundamental operations such as addition, subtraction, multiplication, and division.
+![Cal_logic_com](https://github.com/user-attachments/assets/daa5e16a-832f-4958-83ad-72855052a136)
+
+#### Logic: ####
+```
+   $val1[31:0] = $rand1[3:0];
+   $val2[31:0] = $rand2[3:0];
+   
+   $add[31:0] =  $val1[31:0] +  $val2[31:0];
+   $min[31:0] =  $val1[31:0] -  $val2[31:0];
+   $mul[31:0] =  $val1[31:0] *  $val2[31:0];
+   $div[31:0] =  $val1[31:0] /  $val2[31:0];
+   
+   $out[31:0] = $sel[1] ? ($sel[0] ? $div[31:0] : $mul[31:0])
+                        : ($sel[0] ? $min[31:0] : $add[31:0]);
+```
+TL Code & Waveform for the Combinational Calculator:
+![calc_comb](https://github.com/user-attachments/assets/f9f1d2fe-9d11-4187-90d6-9a1d789ad22a)
+</details>
+<details>
+	<summary>Digital Sequential Circuit Implementation</summary>
+	<br>
+	
+ ## Sequential Circuit Implementaion ##
+ ### Counter ###
+A counter is a digital circuit that sequentially counts through a series of states, typically used for counting events or generating specific time delays. It can be implemented as either a binary counter, which counts in binary increments, or a decade counter, which counts from 0 to 9.
+#### Logic: ####
+```
+$out[31:0] = $reset ? 1 : (>>1$out + 1);
+```
+Here is the TL code and output wave form for the counter
+![Counter](https://github.com/user-attachments/assets/d3d68363-943d-472d-ba4e-32b6d6f7d438)
+
+ ### Fibinacci Sequence : ###
+ The Fibonacci sequence is a series where each number is the sum of the two preceding ones, starting with 0 and 1; for example, the sequence begins 0, 1, 1, 2, 3, 5, 8, and so on.
+ #### Logic ####
+ ```
+$out[31:0] = $reset ? 1 : (>>1$out + >>2$out);
+```
+![Fibnacci](https://github.com/user-attachments/assets/723a4296-58c1-4ae7-9da5-ce744661176c)
+### Seuential calculator : ###
+A sequential calculator processes operations in a step-by-step fashion, with each operation relying on the results of the previous one, making the output of one step the input for the next.
+A sequential calculator can be realized using a 4-to-1 multiplexer (MUX) and a flip-flop to store the current out[31:0] data. Additionally, a reset signal ensures that the calculator outputs 32'b0 when the reset is activated.
+![Seq_cal_log](https://github.com/user-attachments/assets/52d171cb-533f-4940-a58e-a0dd61c7980a)
+
+#### Logic: ####
+```
+   $val1[31:0] = $rand1[3:0];
+   $val2[31:0] = >>1$out[31:0];
+   $op[1:0] = $rand2[1:0];
+   
+   $sum[31:0] = $val1[31:0] + $val2[31:0];
+   $diff[31:0] = $val1[31:0] - $val2[31:0];
+   $prod[31:0] = $val1[31:0] * $val2[31:0];
+   $quot[31:0] = $val1[31:0] / $val2[31:0];
+   
+   $out[31:0] = $reset ? 32'b0 : (($op[1:0]==2'b00) ? $sum :
+                                       ($op[1:0]==2'b01) ? $diff :
+                                          ($op[1:0]==2'b10) ? $prod : $quot);
+   
+   `BOGUS_USE($out);
+   `BOGUS_USE($reset);
+```
+Here is the TL code and Wave form of the Sequential calculator
+![seq_calc](https://github.com/user-attachments/assets/1b50ca7a-a2d6-4fa8-ad53-30c28f0388f9)
+</details>
+<details>
+	<summary>Pipelining</summary>
+	<br>
+
+ 
+</details>
+</details>
