@@ -1376,7 +1376,9 @@ This simulation helps in understanding how a RISC-V CPU executes a given set of 
 ![day5_cir](https://github.com/user-attachments/assets/f2d2c65a-0ef0-4a29-9300-ac51c0ed302e)
 #### Wave Forms ####
 ![risc-v](https://github.com/user-attachments/assets/8ef85cb5-8c49-4109-a0a7-14edfd8a7ca2)
-![output](https://github.com/user-attachments/assets/c4ba5974-0d73-49bf-a6c1-40690a95e6a7)
+output 
+![output](https://github.com/user-attachments/assets/133e8997-a4cf-43ae-822b-b97223f5000a)
+
 #### VIZ ####
 ![viz](https://github.com/user-attachments/assets/3cc02ff1-48cc-47ca-8a51-77d5cc961ded)
 
