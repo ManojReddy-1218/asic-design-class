@@ -456,6 +456,54 @@ Here is the TL code and Wave form of the Sequential calculator
 	<summary>Pipelining</summary>
 	<br>
 
- 
+ ## Pipe lining: ##
+Pipelining is a technique used in computer architecture to improve instruction throughput by overlapping the execution of multiple instructions. In a pipelined processor, different stages of instruction processing (such as fetching, decoding, executing, and writing back) are performed in parallel. This approach increases overall performance by allowing the CPU to work on several instructions simultaneously, reducing the time needed to execute a sequence of instructions. However, pipelining introduces complexities such as data hazards and control hazards that must be managed to maintain efficiency.
+
+Calculator is implemented with pipelining
+ #### Logic: ####
+ ```
+ |calc
+      @1
+         $input1[31:0] = $rand1[3:0];
+         $input2[31:0] = >>1$result;
+
+         $sum[31:0] = $input1 + $input2;
+         $difference[31:0] = $input1 - $input2;
+         $product[31:0] = $input1 * $input2;
+         $quotient[31:0] = $input2 != 0 ? $input1 / $input2 : 32'b0;
+         
+         $result[31:0] = $reset ? 32'b0 : 
+                          ($op[1] ? ($op[0] ? $quotient : $product) : 
+                                    ($op[0] ? $difference : $sum));
+
+         $count[31:0] = $reset ? 32'b0 : >>1$count + 1;
+```
+Here is the TL code and output wave form
+![pipe_calc](https://github.com/user-attachments/assets/6d636555-8774-41ca-abfc-6a15292c7f20)
+
+The same calculator circuit can be implemented with pipelining across two clock cycles. In the first clock cycle, we perform addition, subtraction, multiplication, and division on the two input values. In the second clock cycle, we select the appropriate operand to produce the final output.
+#### Logic:####
+```
+ |calculator
+      @1
+         $input1[31:0] = $rand1[3:0];
+         $input2[31:0] = >>1$intermediate_result;
+
+         $addition[31:0] = $input1 + $input2;
+         $subtraction[31:0] = $input1 - $input2;
+         $multiplication[31:0] = $input1 * $input2;
+         $division[31:0] = $input2 != 0 ? $input1 / $input2 : 32'b0; // Prevent division by zero
+
+         $counter[31:0] = $reset_signal ? 32'b0 : >>1$counter + 1;
+      
+      @2
+         $final_output[31:0] = $reset_signal ? 32'b0 : 
+                               ($operation[1] ? 
+                                ($operation[0] ? $division[31:0] : $multiplication[31:0]) :
+                                ($operation[0] ? $subtraction[31:0] : $addition[31:0]));
+```
+Here is the TL code and output Waveform
+![image](https://github.com/user-attachments/assets/1e09fba7-1556-4a2c-aa7f-833835bfdcb8)
+
 </details>
 </details>
