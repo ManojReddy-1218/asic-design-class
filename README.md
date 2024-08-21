@@ -560,6 +560,8 @@ Here is the TL code and output Waveform
   ## Fetch ##
   
 In the fetch stage, the processor retrieves the instruction from memory at the address specified by the program counter. The program counter contains the address for the next instruction, which in our case is after 4 cycles, and the instruction memory stores the instructions to be executed. 
+![Fetch_block](https://github.com/user-attachments/assets/43a24966-4b6e-4748-82e6-69a0b0b09796)
+
 #### Logic ####
 ```
 \m4_TLV_version 1d: tl-x.org
@@ -639,6 +641,8 @@ Branch (B) Type: Instructions that perform conditional branching based on a comp
 Upper Immediate (U) Type: Instructions that handle immediate values used for upper 20 bits.
 Jump (J) Type: Instructions that perform jumps to different locations in the code.
 Proper decoding of each type ensures that the instruction is executed correctly according to its intended operation.
+![Decode_block](https://github.com/user-attachments/assets/0042c257-782d-4173-89ef-2d115cf88d21)
+
 #### Logic: ####
 ```
 \m4_TLV_version 1d: tl-x.org
@@ -753,7 +757,16 @@ Proper decoding of each type ensures that the instruction is executed correctly 
 ```
 Here is the TL code and output wave form
 ![Decode](https://github.com/user-attachments/assets/1455c480-963e-4175-98e8-ccc5ba285354)
-## Instruction Read ##
+</details>
+<details>
+	<summary>Read and Write</summary>
+	<br>
+
+ 
+## Register File Read ##
+Register reading in a CPU involves accessing the contents of specified registers to retrieve values needed for various operations. This process is crucial for instruction execution, as it provides the operands required for arithmetic, logic, and data manipulation tasks. Register reading typically involves decoding instructions to identify which registers to access and then using these registers' values in the CPU’s computation and control logic.
+![File_read](https://github.com/user-attachments/assets/2398be2e-5146-4fc9-a899-33bc12bf329a)
+
 #### Logic: ####
 ```
 \m4_TLV_version 1d: tl-x.org
@@ -874,7 +887,10 @@ Here is the TL code and output wave form
    endmodule
 ```
 ![read](https://github.com/user-attachments/assets/54349c5c-d9f6-47f4-9ad2-d78b3b023a78)
-## Instruction Write ##
+## Register File Write ##
+Register writing involves updating the contents of specified registers with new values produced by computations or operations. This process is essential for storing results of arithmetic or logical operations, setting up data for future instructions, or modifying control information. Register writing is typically managed by decoding instructions to determine the target registers and then transferring the computed values into those registers as part of the CPU’s execution cycle.
+![File_write](https://github.com/user-attachments/assets/4b5446ff-45f9-48b9-932e-734c894a8d75)
+
 #### Logic: ####
 ```
 \m4_TLV_version 1d: tl-x.org
