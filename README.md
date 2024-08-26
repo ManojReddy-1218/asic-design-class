@@ -1388,7 +1388,7 @@ output
 	<summary>ASIC Lab 6</summary>
 	<br>
 
-# RISC-V Pre-Synthesis Simulation using Icarus Verilog, GTKWave, and Makerchip
+# Conversion of TL-Verilog to Verilog with Sandpiper: Simulation and Waveform Analysis
 
 ## Aim
 
