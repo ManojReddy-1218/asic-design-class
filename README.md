@@ -1508,8 +1508,7 @@ Navigate to the output directory and execute the simulation output file to gener
 
 
 ## Conclusion
-
-we can see that the output of GTKWave form matches with Makerchip output wave form.
+The waveform outputs from GTKWave and Makerchip matched perfectly, validating the RISC-V processor design's accuracy and consistency. This alignment confirms that the design of RISC-V core processor is robust.
 
 
 </details>
