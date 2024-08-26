@@ -1390,23 +1390,9 @@ output
 
  # RISC-V Pre-Synthesis Simulation using Icarus Verilog, GTKWave, and Makerchip
 
-This repository provides a step-by-step guide to simulating a RISC-V processor using TL-Verilog, Icarus Verilog, and GTKWave. The RISC-V processor is initially designed in TL-Verilog within the Makerchip IDE and then converted to Verilog for simulation and potential FPGA implementation using the Sandpiper-SaaS compiler.
-
 ## Aim
 
 To compare the pre-synthesis simulation outputs of a RISC-V processor using the Icarus Verilog, GTKWave, and Makerchip tools.
-
-## Prerequisites
-
-Ensure you have the following software installed:
-
-- Make
-- Python (both 2 and 3)
-- Python3-pip
-- Git
-- Icarus Verilog
-- GTKWave
-- Docker
 
 ## Installation
 
@@ -1499,25 +1485,17 @@ After completing the above steps, you can visualize the simulation output using 
 
 ### GTKWave Output Waveform
 
+![verilog](https://github.com/user-attachments/assets/4829406f-f690-40e1-ac47-769c91b956de)
+
 
 
 ### Comparison of Output Waveforms
 
-![Comparison](images/comparison_output.png)
+![output](https://github.com/user-attachments/assets/6cc7233a-6669-4cae-89e6-f7c2761761f0)
+
 
 ## Conclusion
 
-This guide provides a detailed walkthrough of simulating a RISC-V processor using TL-Verilog, Icarus Verilog, and GTKWave. By following these steps, you can verify the functionality of your RISC-V design before synthesis, ensuring it meets the required specifications.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- [Makerchip](https://makerchip.com/) for providing the TL-Verilog design environment.
-- [Sandpiper-SaaS](https://www.redwoodeda.com/) for the TL-Verilog to Verilog compiler.
-- [Icarus Verilog](http://iverilog.icarus.com/) and [GTKWave](http://gtkwave.sourceforge.net/) for the simulation tools.
-
+This provides a detailed walkthrough of simulating a RISC-V processor using TL-Verilog, Icarus Verilog, and GTKWave. By following these steps, you can verify the functionality of your RISC-V design before synthesis, ensuring it meets the required specifications.
 
 </details>
