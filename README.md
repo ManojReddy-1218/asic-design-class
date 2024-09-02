@@ -1512,3 +1512,164 @@ The waveform outputs from GTKWave and Makerchip matched perfectly, validating th
 
 
 </details>
+<details>
+	<summary>ASIC Lab 7</summary>
+	<br>
+
+ # RISC-V Pre-Synthesis Analog Simulation Analysis
+
+## Objective
+
+Analyze RISC-V Pre-Synthesis Analog Simulation Outputs Using Iverilog and GTKWave.
+
+## Sub-Task 1: Tools Installation
+
+### Install Yosys
+
+Yosys is a framework for RTL synthesis. Follow these steps to install it:
+
+1. **Clone the Yosys Repository**
+    ```bash
+    git clone https://github.com/YosysHQ/yosys.git
+    cd yosys
+    ```
+
+2. **Ensure `make` is Installed**
+    ```bash
+    sudo apt install make
+    ```
+
+3. **Install Required Dependencies**
+    ```bash
+    sudo apt-get install build-essential clang bison flex \
+        libreadline-dev gawk tcl-dev libffi-dev git \
+        graphviz xdot pkg-config python3 libboost-system-dev \
+        libboost-python-dev libboost-filesystem-dev zlib1g-dev
+    ```
+
+4. **Compile Yosys**
+    ```bash
+    make config-gcc
+    make
+    sudo make install
+    ```
+
+5. **Verify Yosys Installation**
+    ```bash
+    yosys
+    ```
+![Screenshot from 2024-09-02 18-01-19](https://github.com/user-attachments/assets/1acfbcd9-25bc-4d67-8cea-d1187e18c151)
+
+### Install IVerilog
+
+IVerilog is a Verilog simulation and synthesis tool. Follow these steps to install it:
+
+1. **Install IVerilog**
+    ```bash
+    sudo apt-get install iverilog
+    ```
+
+2. **Verify IVerilog Installation**
+    ```bash
+    iverilog -v
+    ```
+![Screenshot from 2024-09-02 18-03-11](https://github.com/user-attachments/assets/ed251a03-ce67-4849-ae5a-c68c044cde27)
+
+### Install GTKWave
+
+GTKWave is a waveform viewer used for debugging digital circuits. Follow these steps to install it:
+
+1. **Update and Install GTKWave**
+    ```bash
+    sudo apt update
+    sudo apt install gtkwave
+    ```
+
+
+2. **Verify GTKWave Installation**
+    ```bash
+    gtkwave
+    ```
+![Screenshot from 2024-09-02 18-04-34](https://github.com/user-attachments/assets/7cfcba2c-4eae-4dba-9c16-c8928e4573b5)
+
+### Install OpenSTA
+
+OpenSTA is used for static timing analysis. Follow these steps to install it:
+
+1. **Clone OpenSTA Repository**
+    ```bash
+    git clone https://github.com/The-OpenROAD-Project/OpenSTA.git
+    cd OpenSTA
+    mkdir build
+    cd build
+    ```
+
+2. **Build OpenSTA**
+    ```bash
+    cmake ..
+    make
+    sudo make install
+    ```
+
+3. **Verify OpenSTA Installation**
+    ```bash
+    sta -v
+![Screenshot from 2024-09-02 19-07-52](https://github.com/user-attachments/assets/ca70a5be-f476-4419-a9fc-7cf974d44906)
+
+
+## Sub-Task 2: BabySoC Simulation
+
+VSDBabySoC is a small yet powerful RISC-V-based SoC designed to test open-source IP cores and calibrate the analog components. The main components include a RVMYTH microprocessor, an 8x-PLL for stable clock generation, and a 10-bit DAC for analog communication.
+
+### Phase-Locked Loop (PLL)
+
+A Phase-Locked Loop (PLL) is an electronic circuit that synchronizes an output signal's phase and frequency with a reference signal. It consists of three main components:
+
+- **Phase Detector:** Compares the phase of the reference signal with the output signal and generates an error signal based on the difference.
+- **Loop Filter:** Processes the error signal to smooth it out, reducing noise and improving stability.
+- **Voltage-Controlled Oscillator (VCO):** Adjusts its output frequency based on the filtered error signal to minimize the phase difference.
+
+PLLs are widely used in applications such as clock generation, frequency synthesis, and data recovery in communication systems.
+
+### Digital-to-Analog Converter (DAC)
+
+A Digital-to-Analog Converter (DAC) is an electronic device that converts digital signals (typically binary) into analog signals (such as voltage or current). This conversion is crucial in systems where digital data needs to be interpreted by analog devices or for output to be perceived by humans, like in audio and video equipment.
+
+DACs are commonly used in applications like audio playback, video display, and signal processing.
+
+### Navigate to VSDBabySoC Directory
+
+1. **Navigate to VSDBabySoC Directory**
+    ```bash
+    cd VSDBabySoC
+    ```
+
+2. **Compile Verilog Files**
+    ```bash
+    iverilog -o ./pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/include -I src/module/
+    ```
+
+3. **Run the Simulation**
+    ```bash
+    ./pre_synth_sim.out
+    ```
+
+4. **View the Waveform in GTKWave**
+    ```bash
+    gtkwave pre_synth_sim.vcd
+    ```
+
+5. **Observed Results**
+![Screenshot from 2024-09-02 16-43-37](https://github.com/user-attachments/assets/31b62db0-089f-4453-b97b-e84f7a8c5102)
+![Screenshot from 2024-09-02 16-45-24](https://github.com/user-attachments/assets/d0b8db91-9a58-43e1-9e51-ec903b23f9b0)
+
+    The simulation output will display the results, including:
+    
+    - `CLK`: The output clock signal from the PLL module.
+    - `clk_Man`: The clock used by the RISC-V CPU for operations.
+    - `reset`: The reset signal for the RISC-V CPU.
+    - `REF`: The input clock reference signal to the PLL module.
+    - `OUT`: The DAC output signal.
+
+
+</details>
