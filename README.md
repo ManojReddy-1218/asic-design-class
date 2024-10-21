@@ -1683,14 +1683,12 @@ This documentation provides a detailed walkthrough of the RTL design process usi
 
 
 <details>
-<summary> Day 1: Simulation with iVerilog and GTKWave</summary>
+<summary> Day 1</summary>
 <br>
 	
 ### Overview
 
 This session introduces the flow of simulating a Verilog-based design using the iVerilog tool and visualizing the results with GTKWave. A simple 2:1 multiplexer is used as the example for this task.
-
----
 
 <details>
 <summary>Lab 1: Repository Cloning</summary>
@@ -1855,6 +1853,554 @@ _Screenshots of the Yosys flow and the generated logic diagram_:
 ![Screenshot from 2024-10-21 12-11-29](https://github.com/user-attachments/assets/6ec7152f-0999-476a-b1bc-576ee0e0a1ab)
 ![Screenshot from 2024-10-21 12-21-24](https://github.com/user-attachments/assets/3eb4a73b-1784-4b8d-96c4-dc09493669e0)
 
+
+</details>
+
+
+</details>
+<details>
+<summary>Day 2</summary>
+<br>
+<details>
+<summary>Lab 1: Introduction and Walkthrough to '.lib' File</summary>
+<br>
+	
+#### Objective:
+In this lab, we will explore the `.lib` file format, which contains a collection of standard cells, including details about their characteristics, such as delay, power, and area. We will specifically examine the **SKY130** standard cell library used in the RTL design process.
+
+---
+
+#### What is a '.lib' file?
+
+A `.lib` file (also known as a Liberty file) is a technology-specific library that contains the characterization of various standard cells for a particular process node (such as 130nm for SKY130). The file includes details such as the process technology, environmental conditions (voltage, temperature), and timing/power characteristics of the cells.
+
+The `.lib` file provides essential information for synthesis, placement, and routing tools to accurately map RTL designs into gate-level netlists.
+
+---
+
+<details>
+<summary>Step 1: Viewing the '.lib' File</summary>
+
+#### Procedure:
+
+1. **Switch to the root user**:
+   ```bash
+   sudo -i
+   ```
+
+2. **Navigate to the directory containing the library**:
+   ```bash
+   cd /home/yerasi-manoj-reddy/VLSI/sky130RTLDesignAndSynthesisWorkshop/lib
+   ```
+
+3. **Open the Liberty file**:
+   The `.lib` file you will explore is `sky130_fd_sc_hd__tt_025C_1v80.lib`. Open it using the `gvim` editor:
+   ```bash
+   gvim sky130_fd_sc_hd__tt_025C_1v80.lib
+   ```
+
+4. **Disable syntax highlighting (optional)**:
+   To turn off syntax highlighting for a clearer view of the contents, press:
+   ```bash
+   Shift + : syn off
+   ```
+
+At this point, you can begin analyzing the contents of the `.lib` file.
+
+</details>
+
+---
+
+<details>
+<summary>Step 2: Understanding the Process Information</summary>
+
+In the Liberty file, the process information is provided at the beginning of the file. Here’s what some of the key parameters indicate:
+
+1. **Process Technology**:
+   - The `.lib` file specifies that this technology is **CMOS** and it pertains to a 130nm process node:
+     ```bash
+     technology("cmos").
+     ```
+
+2. **Delay Model**:
+   - The delay model used here is **table lookup**, which means the delay for each cell is characterized using lookup tables:
+     ```bash
+     delay_model : "table_lookup".
+     ```
+
+3. **Bus Naming Style**:
+   - Defines how buses are named in the library:
+     ```bash
+     bus_naming_style : "%s[%d]".
+     ```
+
+4. **Units of Measurement**:
+   - The `.lib` file defines various units, which include:
+     ```bash
+     time_unit : "1ns".
+     voltage_unit : "1V".
+     leakage_power_unit : "1nW".
+     current_unit : "1mA".
+     pulling_resistance_unit : "1kohm".
+     capacitive_load_unit(1.0000000000, "pf").
+     ```
+
+This information tells you how the parameters are expressed within the Liberty file, including the units for time, voltage, leakage power, and capacitance.
+
+</details>
+
+---
+
+<details>
+<summary>### Step 3: Cell Characteristics and Constraints</summary>
+
+The `.lib` file contains detailed characteristics for each standard cell in the library. These include:
+
+1. **Leakage Power**:
+   - Specifies how much power is consumed by the cell in its idle state.
+
+2. **Power Consumption**:
+   - Describes the dynamic power consumed by the cell during switching.
+
+3. **Area**:
+   - The physical area that the cell occupies on the silicon.
+
+4. **Input Capacitance and Delay**:
+   - Defines the input capacitance and the delay introduced by the cell for different input combinations. 
+
+Let’s explore the characteristics of a simple **2-input AND gate**:
+
+- The `.lib` file includes detailed specifications for cells such as this AND gate, outlining its behavior under different input and output conditions.
+
+</details>
+
+---
+
+_Screenshots of terminal outputs and further walkthroughs of `.lib` contents:_
+
+(Insert Images)
+
+</details>
+
+<details>
+<summary>Lab 2: Hierarchical Synthesis vs Flat Synthesis and Various D-Flip-Flops</summary>
+<br>
+	
+#### Objective:
+This lab aims to compare hierarchical synthesis and flat synthesis, as well as explore various coding styles for D-Flip-Flops, including their simulation and synthesis using Yosys.
+
+
+
+<details>
+<summary>Hierarchical Synthesis</summary>
+<br>
+	
+#### Command Steps:
+
+1. **Navigate to the required directory**:
+   ```bash
+   cd ~
+   cd /home/yerasi-manoj-reddy/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+   ```
+
+2. **Start Yosys**:
+   ```bash
+   yosys
+   ```
+
+3. **Read the library**:
+   ```bash
+   read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+   ```
+
+4. **Read the design Verilog files**:
+   ```bash
+   read_verilog multiple_modules.v
+   ```
+
+5. **Synthesize the Design**:
+   ```bash
+   synth -top multiple_modules
+   ```
+
+   When executing the `synth -top multiple_modules` command, a hierarchical synthesis is performed, preserving the hierarchy between modules.
+
+6. **Generate the Netlist**:
+   ```bash
+   abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+   ```
+
+7. **Create a Graphical Representation of Logic for Multiple Modules**:
+   ```bash
+   show multiple_modules
+   ```
+
+8. **Writing the netlist and viewing**:
+   ```bash
+   write_verilog -noattr multiple_modules_hier.v
+   !vim multiple_modules_hier.v
+   ```
+
+9. **Flattening**:
+   To merge all hierarchical modules into a single module, use:
+   ```bash
+   flatten
+   ```
+
+10. **Write and view the flattened netlist**:
+    ```bash
+    write_verilog -noattr multiple_modules_flat.v
+    !vim multiple_modules_flat.v
+    ```
+
+11. **Create a Graphical Representation of the Flattened Design**:
+    ```bash
+    show
+    ```
+
+</details>
+
+---
+
+<details>
+<summary>Various D Flip-Flop Coding Styles</summary>
+<br>
+	
+In this section, we will simulate different types of D Flip-Flops, including:
+
+1. **Asynchronous Reset**
+2. **Asynchronous Set**
+3. **Synchronous Reset**
+
+---
+
+<details>
+<summary>1. Asynchronous Reset</summary>
+
+#### Verilog Code:
+```verilog
+module dff_asyncres(input clk, input async_reset, input d, output reg q);
+    always@(posedge clk, posedge async_reset)
+    begin
+        if(async_reset)
+            q <= 1'b0;
+        else
+            q <= d;
+    end
+endmodule
+```
+
+#### Testbench Code:
+```verilog
+module tb_dff_asyncres; 
+    reg clk, async_reset, d;
+    wire q;
+    dff_asyncres uut (.clk(clk), .async_reset(async_reset), .d(d), .q(q));
+
+    initial begin
+        $dumpfile("tb_dff_asyncres.vcd");
+        $dumpvars(0, tb_dff_asyncres);
+        // Initialize Inputs
+        clk = 0;
+        async_reset = 1;
+        d = 0;
+        #3000 $finish;
+    end
+
+    always #10 clk = ~clk;
+    always #23 d = ~d;
+    always #547 async_reset = ~async_reset; 
+endmodule
+```
+
+#### Command Steps:
+1. **Navigate to the required directory**:
+   ```bash
+   sudo -i
+   cd ~
+   cd /home/yerasi-manoj-reddy/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+   ```
+
+2. **Compile and simulate**:
+   ```bash
+   iverilog dff_asyncres.v tb_dff_asyncres.v
+   ```
+
+3. **Run the simulation**:
+   ```bash
+   ./a.out
+   gtkwave tb_dff_asyncres.vcd
+   ```
+
+_Observation: The Q output changes to zero when the asynchronous reset is set high, independent of the clock edge._
+
+</details>
+
+
+<details>
+<summary>2. Asynchronous Set</summary>
+<br>
+	
+#### Verilog Code:
+```verilog
+module dff_async_set(input clk, input async_set, input d, output reg q);
+    always@(posedge clk, posedge async_set)
+    begin
+        if(async_set)
+            q <= 1'b1;
+        else
+            q <= d;
+    end
+endmodule
+```
+
+#### Testbench Code:
+```verilog
+module tb_dff_async_set; 
+    reg clk, async_set, d;
+    wire q;
+    dff_async_set uut (.clk(clk), .async_set(async_set), .d(d), .q(q));
+
+    initial begin
+        $dumpfile("tb_dff_async_set.vcd");
+        $dumpvars(0, tb_dff_async_set);
+        // Initialize Inputs
+        clk = 0;
+        async_set = 1;
+        d = 0;
+        #3000 $finish;
+    end
+
+    always #10 clk = ~clk;
+    always #23 d = ~d;
+    always #547 async_set = ~async_set; 
+endmodule
+```
+
+#### Command Steps:
+1. **Navigate to the required directory**:
+   ```bash
+   sudo -i
+   cd ~
+   cd /home/yerasi-manoj-reddy/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+   ```
+
+2. **Compile and simulate**:
+   ```bash
+   iverilog dff_async_set.v tb_dff_async_set.v
+   ```
+
+3. **Run the simulation**:
+   ```bash
+   ./a.out
+   gtkwave tb_dff_async_set.vcd
+   ```
+
+_Observation: The Q output changes to one when the asynchronous set is set high, independent of the clock edge._
+
+</details>
+
+
+<details>
+<summary>3. Synchronous Reset</summary>
+<br>
+	
+#### Verilog Code:
+```verilog
+module dff_syncres(input clk, input sync_reset, input d, output reg q);
+    always@(posedge clk)
+    begin
+        if(sync_reset)
+            q <= 1'b0;
+        else
+            q <= d;
+    end
+endmodule
+```
+
+#### Testbench Code:
+```verilog
+module tb_dff_syncres; 
+    reg clk, sync_reset, d;
+    wire q;
+    dff_syncres uut (.clk(clk), .sync_reset(sync_reset), .d(d), .q(q));
+
+    initial begin
+        $dumpfile("tb_dff_syncres.vcd");
+        $dumpvars(0, tb_dff_syncres);
+        // Initialize Inputs
+        clk = 0;
+        sync_reset = 1;
+        d = 0;
+        #3000 $finish;
+    end
+
+    always #10 clk = ~clk;
+    always #23 d = ~d;
+    always #547 sync_reset = ~sync_reset; 
+endmodule
+```
+
+#### Command Steps:
+1. **Navigate to the required directory**:
+   ```bash
+   sudo -i
+   cd ~
+   cd /home/yerasi-manoj-reddy/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+   ```
+
+2. **Compile and simulate**:
+   ```bash
+   iverilog dff_syncres.v tb_dff_syncres.v
+   ```
+
+3. **Run the simulation**:
+   ```bash
+   ./a.out
+   gtkwave tb_dff_syncres.vcd
+   ```
+
+_Observation: The Q output changes to zero when the synchronous reset is set high, only at the positive clock edge._
+
+</details>
+
+---
+
+#### Synthesis of Various D-Flip-Flops Using Yosys:
+We will synthesize the previously mentioned types of D-Flip-Flops using Yosys.
+
+---
+
+<details>
+<summary>1. Asynchronous Reset D Flip-Flop</summary>
+<br>
+	
+#### Command Steps:
+1. **Navigate to the required directory**:
+   ```bash
+   cd ~
+   cd /home/yerasi-manoj-reddy/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+   ```
+
+2. **Start Yosys**:
+   ```bash
+   yosys
+   ```
+
+3. **Read the library**:
+   ```bash
+   read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+   ```
+
+4. **Read the design Verilog file**:
+   ```bash
+   read_verilog dff_asyncres.v
+   ```
+
+5. **Synthesize the Design**:
+   ```bash
+   synth -top dff_asyncres
+   ```
+
+6. **Generate the Netlist**:
+   ```bash
+   dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+   ```
+
+7. **Create a Graphical Representation**:
+   ```bash
+   show
+   ```
+
+</details>
+
+
+<details>
+<summary>2. Asynchronous Set D Flip-Flop</summary>
+<br>
+	
+#### Command Steps:
+1. **Navigate to the required directory**:
+   ```bash
+   cd ~
+   cd /home/yerasi-manoj-reddy/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+   ```
+
+2. **Start Yosys**:
+   ```bash
+   yosys
+   ```
+
+3. **Read the library**:
+   ```bash
+   read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+   ```
+
+4. **Read the design Verilog file**:
+   ```bash
+   read_verilog dff_async_set.v
+   ```
+
+5. **Synthesize the Design**:
+   ```bash
+   synth -top dff_async_set
+   ```
+
+6. **Generate the Netlist**:
+   ```bash
+   dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+   ```
+
+7. **Create a Graphical Representation**:
+   ```bash
+   show
+   ```
+
+</details>
+
+
+<details>
+<summary>3. Synchronous Reset D Flip-Flop</summary>
+<br>
+	
+#### Command Steps:
+1. **Navigate to the required directory**:
+   ```bash
+   cd ~
+   cd /home/yerasi-manoj-reddy/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+   ```
+
+2. **Start Yosys**:
+   ```bash
+   yosys
+   ```
+
+3. **Read the library**:
+   ```bash
+   read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+   ```
+
+4. **Read the design Verilog file**:
+   ```bash
+   read_verilog dff_syncres.v
+   ```
+
+5. **Synthesize the Design**:
+   ```bash
+   synth -top dff_syncres
+   ```
+
+6. **Generate the Netlist**:
+   ```bash
+   dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+   ```
+
+7. **Create a Graphical Representation**:
+   ```bash
+   show
+   ```
+
+</details>
 
 </details>
 
