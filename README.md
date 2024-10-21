@@ -2133,6 +2133,7 @@ endmodule
    ./a.out
    gtkwave tb_dff_asyncres.vcd
    ```
+![Screenshot from 2024-10-21 14-55-43](https://github.com/user-attachments/assets/3e38c9e8-9a0f-4d7b-83e6-249e3b8a24ac)
 
 _Observation: The Q output changes to zero when the asynchronous reset is set high, independent of the clock edge._
 
@@ -2197,6 +2198,7 @@ endmodule
    ./a.out
    gtkwave tb_dff_async_set.vcd
    ```
+![Screenshot from 2024-10-21 14-59-51](https://github.com/user-attachments/assets/8171af57-6ad3-4cdf-8b8c-8e53c8c90fc3)
 
 _Observation: The Q output changes to one when the asynchronous set is set high, independent of the clock edge._
 
@@ -2261,6 +2263,7 @@ endmodule
    ./a.out
    gtkwave tb_dff_syncres.vcd
    ```
+![Screenshot from 2024-10-21 15-04-01](https://github.com/user-attachments/assets/eaca1086-6b45-4d38-b40c-b0d85c64a1d9)
 
 _Observation: The Q output changes to zero when the synchronous reset is set high, only at the positive clock edge._
 
