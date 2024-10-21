@@ -1868,7 +1868,6 @@ _Screenshots of the Yosys flow and the generated logic diagram_:
 #### Objective:
 In this lab, we will explore the `.lib` file format, which contains a collection of standard cells, including details about their characteristics, such as delay, power, and area. We will specifically examine the **SKY130** standard cell library used in the RTL design process.
 
----
 
 #### What is a '.lib' file?
 
@@ -1876,7 +1875,6 @@ A `.lib` file (also known as a Liberty file) is a technology-specific library th
 
 The `.lib` file provides essential information for synthesis, placement, and routing tools to accurately map RTL designs into gate-level netlists.
 
----
 
 <details>
 <summary>Step 1: Viewing the '.lib' File</summary>
@@ -1906,10 +1904,12 @@ The `.lib` file provides essential information for synthesis, placement, and rou
    ```
 
 At this point, you can begin analyzing the contents of the `.lib` file.
+_Screenshots of terminal outputs and further walkthroughs of `.lib` contents:_
+![Screenshot from 2024-10-21 14-28-23](https://github.com/user-attachments/assets/8e5b8a21-1b52-4c19-b61c-e8dfa33a106b)
+
 
 </details>
 
----
 
 <details>
 <summary>Step 2: Understanding the Process Information</summary>
@@ -1949,10 +1949,8 @@ This information tells you how the parameters are expressed within the Liberty f
 
 </details>
 
----
-
 <details>
-<summary>### Step 3: Cell Characteristics and Constraints</summary>
+<summary>Step 3: Cell Characteristics and Constraints</summary>
 
 The `.lib` file contains detailed characteristics for each standard cell in the library. These include:
 
@@ -1969,6 +1967,7 @@ The `.lib` file contains detailed characteristics for each standard cell in the 
    - Defines the input capacitance and the delay introduced by the cell for different input combinations. 
 
 Let’s explore the characteristics of a simple **2-input AND gate**:
+![Screenshot from 2024-10-21 14-29-08](https://github.com/user-attachments/assets/0f3b0e2b-cca9-47ad-8800-cc9922cc557e)
 
 - The `.lib` file includes detailed specifications for cells such as this AND gate, outlining its behavior under different input and output conditions.
 
@@ -1976,9 +1975,6 @@ Let’s explore the characteristics of a simple **2-input AND gate**:
 
 ---
 
-_Screenshots of terminal outputs and further walkthroughs of `.lib` contents:_
-
-(Insert Images)
 
 </details>
 
@@ -2024,6 +2020,7 @@ This lab aims to compare hierarchical synthesis and flat synthesis, as well as e
    ```
 
    When executing the `synth -top multiple_modules` command, a hierarchical synthesis is performed, preserving the hierarchy between modules.
+![Screenshot from 2024-10-21 14-41-15](https://github.com/user-attachments/assets/f630517a-98d8-4bce-8f5a-420e2d94fda2)
 
 6. **Generate the Netlist**:
    ```bash
@@ -2034,12 +2031,14 @@ This lab aims to compare hierarchical synthesis and flat synthesis, as well as e
    ```bash
    show multiple_modules
    ```
+![Screenshot from 2024-10-21 14-40-26](https://github.com/user-attachments/assets/b8e91f7d-a1c5-47bb-97c6-d7dd7a5a73dc)
 
 8. **Writing the netlist and viewing**:
    ```bash
    write_verilog -noattr multiple_modules_hier.v
    !vim multiple_modules_hier.v
    ```
+![image](https://github.com/user-attachments/assets/15d96283-2099-45fb-8bf3-ae55292ae148)
 
 9. **Flattening**:
    To merge all hierarchical modules into a single module, use:
@@ -2052,11 +2051,14 @@ This lab aims to compare hierarchical synthesis and flat synthesis, as well as e
     write_verilog -noattr multiple_modules_flat.v
     !vim multiple_modules_flat.v
     ```
+![Screenshot from 2024-10-21 14-47-05](https://github.com/user-attachments/assets/ce1d76d6-1b3b-479e-a3b6-64d75693192f)
+![Screenshot from 2024-10-21 14-46-44](https://github.com/user-attachments/assets/a2c2eed0-08ea-4e3e-8f3d-afcfd017f29f)
 
 11. **Create a Graphical Representation of the Flattened Design**:
     ```bash
     show
     ```
+![Screenshot from 2024-10-21 14-49-33](https://github.com/user-attachments/assets/d05d5e49-b09c-413b-a57f-f531cf03f04f)
 
 </details>
 
