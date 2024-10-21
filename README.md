@@ -1683,7 +1683,7 @@ This documentation provides a detailed walkthrough of the RTL design process usi
 
 
 <details>
-<summary> Day 1</summary>
+<summary> Day-1</summary>
 <br>
 	
 ### Overview
@@ -1859,7 +1859,7 @@ _Screenshots of the Yosys flow and the generated logic diagram_:
 
 </details>
 <details>
-<summary>Day 2</summary>
+<summary> Day-2</summary>
 <br>
 <details>
 <summary>Lab 1: Introduction and Walkthrough to '.lib' File</summary>
@@ -2415,5 +2415,377 @@ We will synthesize the previously mentioned types of D-Flip-Flops using Yosys.
 
 </details>
 
+
+</details>
+<details>
+  <summary> Day-3</summary>
+<br>
+	
+  <details>
+    <summary> Lab 1: Optimization of Various Combinational Designs</summary>
+	  <br>
+
+## Lab Objective:
+
+This lab focuses on optimizing several fundamental combinational circuits, which include:
+
+ - 2-input AND gate
+ - 2-input OR gate
+ - 3-input AND gate
+ - 2-input XNOR gate (using 3-input Boolean logic)
+ - Multi-module Optimization (two separate cases)
+
+    
+<details>
+     <summary>  2-Input AND Gate</summary>
+<br>
+	
+ #### Verilog Code:
+The following Verilog module implements a 2-input AND gate. The output `y` is driven by the logical AND of inputs `a` and `b`, using a conditional assignment.
+
+      ```verilog
+      module opt_check(input a, input b, output y);
+          assign y = a ? b : 0;
+      endmodule
+      ```
+
+#### Steps for Synthesis:
+1. **Navigate to the Directory:**
+         ```bash
+         cd /home/yerasi-manoj-reddy/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+         ```
+
+  2. **Start the Yosys Tool:**
+         ```bash
+         yosys
+         ```
+
+      3. **Read the Library:**
+         ```bash
+         read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+         ```
+
+      4. **Read the Verilog File:**
+         ```bash
+         read_verilog opt_check.v
+         ```
+
+      5. **Synthesize the Design:**
+         ```bash
+         synth -top opt_check
+         ```
+
+      6. **Generate the Netlist:**
+         ```bash
+         abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+         ```
+
+      7. **Optimize the Design:**
+         ```bash
+         opt_clean -purge
+         ```
+
+      8. **Visualize the Schematic:**
+         ```bash
+         show
+         ```
+</details>
+
+<details>
+      <summary> 2-Input OR Gate</summary>
+<br>
+	
+#### Verilog Code:
+The following Verilog code implements a 2-input OR gate. The output `y` is determined based on the logical OR of inputs `a` and `b`.
+
+      ```verilog
+      module opt_check2(input a, input b, output y);
+          assign y = a ? 1 : b;
+      endmodule
+      ```
+
+#### Steps for Synthesis:
+1. **Navigate to the Directory:**
+         ```bash
+         cd /home/yerasi-manoj-reddy/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+         ```
+
+      2. **Start the Yosys Tool:**
+         ```bash
+         yosys
+         ```
+
+      3. **Read the Library:**
+         ```bash
+         read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+         ```
+
+      4. **Read the Verilog File:**
+         ```bash
+         read_verilog opt_check2.v
+         ```
+
+      5. **Synthesize the Design:**
+         ```bash
+         synth -top opt_check2
+         ```
+
+      6. **Generate the Netlist:**
+         ```bash
+         abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+         ```
+
+      7. **Optimize the Design:**
+         ```bash
+         opt_clean -purge
+         ```
+
+      8. **Visualize the Schematic:**
+         ```bash
+         show
+         ```
+    </details>
+
+    <details>
+      <summary> 3-Input AND Gate</summary>
+
+   ### Verilog Code:
+   This Verilog module describes a 3-input AND gate, where the output `y` is true if and only if all inputs (`a`, `b`, and `c`) are true.
+
+      ```verilog
+      module opt_check3(input a, input b, input c, output y);
+          assign y = a ? (b ? c : 0) : 0;
+      endmodule
+      ```
+
+      #### Steps for Synthesis:
+      1. **Navigate to the Directory:**
+         ```bash
+         cd /home/yerasi-manoj-reddy/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+         ```
+
+      2. **Start the Yosys Tool:**
+         ```bash
+         yosys
+         ```
+
+      3. **Read the Library:**
+         ```bash
+         read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+         ```
+
+      4. **Read the Verilog File:**
+         ```bash
+         read_verilog opt_check3.v
+         ```
+
+      5. **Synthesize the Design:**
+         ```bash
+         synth -top opt_check3
+         ```
+
+      6. **Generate the Netlist:**
+         ```bash
+         abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+         ```
+
+      7. **Optimize the Design:**
+         ```bash
+         opt_clean -purge
+         ```
+
+      8. **Visualize the Schematic:**
+         ```bash
+         show
+         ```
+    </details>
+
+    <details>
+      <summary> 2-Input XNOR Gate (3-Input Boolean Logic)</summary>
+
+      #### Verilog Code:
+      This Verilog module implements a 2-input XNOR gate using 3-input Boolean logic.
+
+      ```verilog
+      module opt_check4(input a, input b, input c, output y);
+          assign y = a ? (b ? ~c : c) : ~c;
+      endmodule
+      ```
+
+      #### Steps for Synthesis:
+      1. **Navigate to the Directory:**
+         ```bash
+         cd /home/yerasi-manoj-reddy/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+         ```
+
+      2. **Start the Yosys Tool:**
+         ```bash
+         yosys
+         ```
+
+      3. **Read the Library:**
+         ```bash
+         read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+         ```
+
+      4. **Read the Verilog File:**
+         ```bash
+         read_verilog opt_check4.v
+         ```
+
+      5. **Synthesize the Design:**
+         ```bash
+         synth -top opt_check4
+         ```
+
+      6. **Generate the Netlist:**
+         ```bash
+         abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+         ```
+
+      7. **Optimize the Design:**
+         ```bash
+         opt_clean -purge
+         ```
+
+      8. **Visualize the Schematic:**
+         ```bash
+         show
+         ```
+    </details>
+
+    <details>
+      <summary> Multiple Module Optimization - 1</summary>
+
+      #### Verilog Code:
+      The following Verilog code describes a multi-module design using submodules for logic optimization.
+
+      ```verilog
+      module sub_module1(input a, input b, output y);
+          assign y = a & b;
+      endmodule
+
+      module sub_module2(input a, input b, output y);
+          assign y = a ^ b;
+      endmodule
+
+      module multiple_module_opt(input a, input b, input c, input d, output y);
+          wire n1, n2, n3;
+
+          sub_module1 U1 (.a(a), .b(1'b1), .y(n1));
+          sub_module2 U2 (.a(n1), .b(1'b0), .y(n2));
+          sub_module2 U3 (.a(b), .b(d), .y(n3));
+
+          assign y = c | (b & n1);
+      endmodule
+      ```
+
+      #### Steps for Synthesis:
+      1. **Navigate to the Directory:**
+         ```bash
+         cd /home/yerasi-manoj-reddy/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+         ```
+
+      2. **Start the Yosys Tool:**
+         ```bash
+         yosys
+         ```
+
+      3. **Read the Library:**
+         ```bash
+         read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+         ```
+
+      4. **Read the Verilog File:**
+         ```bash
+         read_verilog multiple_module_opt.v
+         ```
+
+      5. **Synthesize the Design:**
+         ```bash
+         synth -top multiple_module_opt
+         ```
+
+      6. **Generate the Netlist:**
+         ```bash
+         abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+         ```
+
+      7. **Optimize the Design:**
+         ```bash
+         opt_clean -purge
+         ```
+
+      8. **Visualize the Schematic:**
+         ```bash
+         show
+         ```
+    </details>
+
+    <details>
+      <summary> Multiple Module Optimization - 2</summary>
+
+      #### Verilog Code:
+      This is another example of multi-module optimization with a different configuration.
+
+      ```verilog
+      module sub_module(input a, input b, output y);
+          assign y = a & b;
+      endmodule
+
+      module multiple_module_opt2(input a, input b, input c, input d, output y);
+          wire n1, n2, n3;
+
+          sub_module U1 (.a(a), .b(1'b0), .y(n1));
+          sub_module U2 (.a(b), .b(c), .y(n2));
+          sub_module U3 (.a(n2), .b(d), .y(n3));
+          sub_module U4 (.a(n3), .b(n1), .y(y));
+      endmodule
+      ```
+
+      #### Steps for Synthesis:
+      1. **Navigate to the Directory:**
+         ```bash
+         cd /home/yerasi-manoj-reddy/VLSI/sky130RTLDesignAndSynthesisWorkshop/verilog_files
+         ```
+
+      2. **Start the Yosys Tool:**
+         ```bash
+         yosys
+         ```
+
+      3. **Read the Library:**
+         ```bash
+         read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+         ```
+
+      4. **Read the Verilog File:**
+         ```bash
+         read_verilog multiple_module_opt2.v
+         ```
+
+      5. **Synthesize the Design:**
+         ```bash
+         synth -top multiple_module_opt2
+         ```
+
+      6. **Generate the Netlist:**
+         ```bash
+         abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+         ```
+
+      7. **Optimize the Design:**
+         ```bash
+         opt_clean -purge
+         ```
+
+      8. **Visualize the Schematic:**
+         ```bash
+         show
+         ```
+    </details>
+
+  </details>
+</details>
 
 </details>
