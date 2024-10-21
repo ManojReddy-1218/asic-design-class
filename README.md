@@ -3527,6 +3527,7 @@ Now let's execute the ' a.out ' file and observe the waveforms.
 gtkwave tb_bad_mux.vcd
 ```
 Below is the Snapshot of the above commands and the resultant Waveforms:
+![Screenshot from 2024-10-21 20-44-34](https://github.com/user-attachments/assets/d431486b-8e76-4361-9363-07029250affe)
 
 These waveforms correspond to the GATE LEVEL SYNTHESIS for the Bad MUX.
 
@@ -3551,6 +3552,7 @@ iverilog blocking_caveat.v tb_blocking_caveat.v
 ./a.out
 gtkwave tb_blocking_caveat.vcd
 ```
+![Screenshot from 2024-10-21 20-46-26](https://github.com/user-attachments/assets/4d6dd6b5-6aaf-4ac5-b4bc-a02ec86c319e)
 
 As depicted, when A and B go zero, the OR gate output should be zero (X equal to zero), and the AND gate output should also be zero (same as D output). But, the AND gate input of X takes the previous value of A|B equal to one, based on the design created by the blocking statement, hence the discrepancy in the output.
 
@@ -3584,12 +3586,14 @@ abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 ```bash
 show
 ```
+![Screenshot from 2024-10-21 20-48-05](https://github.com/user-attachments/assets/ba5d0b43-8c89-4e18-8a97-0be6eac6e69e)
 
 ### To See the Netlist:
 ```bash
 write_verilog -noattr blocking_caveat_net.v
 !gvim blocking_caveat_net.v
 ```
+![Screenshot from 2024-10-21 20-48-44](https://github.com/user-attachments/assets/5b130e9f-5799-4935-a456-19888f1ea0ab)
 
 ### Gate Level Synthesis (GLS)
 
@@ -3616,6 +3620,7 @@ gtkwave tb_blocking_caveat.vcd
 ```
 
 Below is the Snapshot of the above commands and the resultant Waveforms:
+![Screenshot from 2024-10-21 20-49-58](https://github.com/user-attachments/assets/542d7087-78d3-41e5-b36d-f7868ed710df)
 
 These waveforms correspond to the GATE LEVEL SYNTHESIS for the Blocking Caveat.
 
