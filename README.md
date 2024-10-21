@@ -2316,6 +2316,7 @@ We will synthesize the previously mentioned types of D-Flip-Flops using Yosys.
    ```bash
    show
    ```
+![Screenshot from 2024-10-21 15-09-56](https://github.com/user-attachments/assets/16b084a2-6d91-41ec-832d-2291349dec4e)
 
 </details>
 
@@ -2360,6 +2361,7 @@ We will synthesize the previously mentioned types of D-Flip-Flops using Yosys.
    ```bash
    show
    ```
+![Screenshot from 2024-10-21 15-13-48](https://github.com/user-attachments/assets/5621d194-1174-4854-96a0-79cae58bd21a)
 
 </details>
 
@@ -2404,6 +2406,7 @@ We will synthesize the previously mentioned types of D-Flip-Flops using Yosys.
    ```bash
    show
    ```
+![Screenshot from 2024-10-21 15-16-27](https://github.com/user-attachments/assets/a33f27d1-bfb3-4750-9dbe-afcf747f3d81)
 
 </details>
 
