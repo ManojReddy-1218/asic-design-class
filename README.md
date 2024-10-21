@@ -2473,6 +2473,7 @@ The following Verilog module implements a 2-input AND gate. The output `y` is dr
    5. **Synthesize the Design:**
          ```bash
          synth -top opt_check
+![Screenshot from 2024-10-21 16-45-53](https://github.com/user-attachments/assets/6212c188-24be-46c3-874f-c8ded324022e)
          ```
 
    6. **Generate the Netlist:**
@@ -2489,6 +2490,8 @@ The following Verilog module implements a 2-input AND gate. The output `y` is dr
          ```bash
          show
          ```
+![Screenshot from 2024-10-21 16-46-04](https://github.com/user-attachments/assets/d05d692b-54ac-4f66-9492-c8e587b826d6)
+
 </details>
 
 <details>
@@ -2530,6 +2533,7 @@ endmodule
          ```bash
          synth -top opt_check2
          ```
+![Screenshot from 2024-10-21 16-47-38](https://github.com/user-attachments/assets/e836c1d2-a918-4b17-85b7-a724e5ce8b23)
 
    6. **Generate the Netlist:**
          ```bash
@@ -2545,6 +2549,9 @@ endmodule
          ```bash
          show
          ```
+![Screenshot from 2024-10-21 16-47-59](https://github.com/user-attachments/assets/05df688c-090f-4f9c-96a4-5b5f64cad072)
+
+
 </details>
 
 <details>
@@ -2585,6 +2592,7 @@ endmodule
          ```bash
          synth -top opt_check3
          ```
+![Screenshot from 2024-10-21 16-49-42](https://github.com/user-attachments/assets/6c8837e4-eea1-4f9e-b788-91fd270c3e51)
 
    6. **Generate the Netlist:**
          ```bash
@@ -2600,6 +2608,8 @@ endmodule
          ```bash
          show
          ```
+![Screenshot from 2024-10-21 16-49-59](https://github.com/user-attachments/assets/389e71ba-5f25-448a-9524-d8ad8ff6ce3a)
+
 </details>
 
 <details>
@@ -2640,6 +2650,7 @@ endmodule
          ```bash
          synth -top opt_check4
          ```
+![Screenshot from 2024-10-21 16-51-07](https://github.com/user-attachments/assets/00e2e0d2-c945-4897-b99b-301e80a72dfc)
 
    6. **Generate the Netlist:**
          ```bash
@@ -2655,6 +2666,8 @@ endmodule
          ```bash
          show
          ```
+![Screenshot from 2024-10-21 16-51-19](https://github.com/user-attachments/assets/34d45b61-46ee-4995-9c8f-7ebc89b48aa3)
+
 </details>
 
 <details>
@@ -2709,6 +2722,8 @@ endmodule
          ```bash
          synth -top multiple_module_opt
          ```
+![Screenshot from 2024-10-21 17-41-09](https://github.com/user-attachments/assets/4f85d082-3a88-4e47-a821-a52f4b8df05b)
+
 
    6. **Generate the Netlist:**
          ```bash
@@ -2719,11 +2734,17 @@ endmodule
          ```bash
          opt_clean -purge
          ```
-
-   8. **Visualize the Schematic:**
+   8. **Flattening merges hierarchies:**
+         ```bash
+         flatten
+         ```
+   9. **Visualize the Schematic:**
          ```bash
          show
          ```
+![Screenshot from 2024-10-21 17-41-30](https://github.com/user-attachments/assets/2a67c8ef-d2e5-4c6e-bb62-37670544968d)
+
+
 </details>
 
 <details>
@@ -2774,6 +2795,7 @@ endmodule
          ```bash
          synth -top multiple_module_opt2
          ```
+![Screenshot from 2024-10-21 16-54-53](https://github.com/user-attachments/assets/68ff496b-eb26-4a84-8dae-2e427228f9ec)
 
    6. **Generate the Netlist:**
          ```bash
@@ -2784,11 +2806,18 @@ endmodule
          ```bash
          opt_clean -purge
          ```
-
-   8. **Visualize the Schematic:**
+   8. **Flattening merges hierarchies:**
+         ```bash
+         flatten
+         ```
+   9. **Visualize the Schematic:**
          ```bash
          show
          ```
+![Screenshot from 2024-10-21 17-38-41](https://github.com/user-attachments/assets/6c37234d-0a53-4245-95fd-aa75c31e8d23)
+
+
+
 </details>
 
 </details>
