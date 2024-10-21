@@ -1673,3 +1673,193 @@ DACs are commonly used in applications like audio playback, video display, and s
 
 
 </details>
+<details>
+	<summary>ASIC Lab 8</summary>
+	<br>
+
+# RTL Design Using Verilog with SKY130 Technology
+
+This documentation provides a detailed walkthrough of the RTL design process using Verilog, simulated with iVerilog and synthesized with Yosys, all within the context of SKY130 technology. It covers cloning the necessary repositories, running simulations with iVerilog, waveform analysis using GTKWave, and logic synthesis using Yosys.
+
+
+<details>
+<summary> Day 1: Simulation with iVerilog and GTKWave</summary>
+<br>
+	
+### Overview
+
+This session introduces the flow of simulating a Verilog-based design using the iVerilog tool and visualizing the results with GTKWave. A simple 2:1 multiplexer is used as the example for this task.
+
+---
+
+<details>
+<summary>Lab 1: Repository Cloning</summary>
+<br>
+	
+#### Objective:
+To begin working with Verilog files, the first step is to clone the required GitHub repository that contains the Verilog examples and files for simulation.
+
+#### Procedure:
+
+Run the following commands to set up your environment:
+
+1. **Switch to root user**:
+   ```bash
+   sudo -i
+   ```
+
+2. **Install Git**:
+   ```bash
+   sudo apt-get install git
+   ```
+
+3. **Navigate to the home directory and create a working folder**:
+   ```bash
+   ls
+   cd /home
+   mkdir VLSI
+   cd VLSI
+   ```
+
+4. **Clone the repository containing Verilog examples**:
+   ```bash
+   git clone https://github.com/kunalg123/sky130RTLDesignAndSynthesisWorkshop.git
+   cd sky130RTLDesignAndSynthesisWorkshop/verilog_files
+   ls
+   ```
+
+At this point, you should have successfully cloned the repository and located the Verilog files necessary for the labs.
+
+_Screenshot of the terminal window:_
+![Screenshot from 2024-10-21 12-55-00](https://github.com/user-attachments/assets/73460891-84f7-4e82-b07f-2f01c3abd59e)
+
+
+
+</details>
+
+<details>
+<summary>Lab 2: Introduction to iVerilog and GTKWave</summary>
+<br>
+	
+#### Objective:
+This lab focuses on implementing and simulating a basic 2:1 multiplexer using the iVerilog simulator and analyzing the waveform with GTKWave.
+
+#### Steps:
+
+1. **Open the Verilog code and its testbench**:
+   Use the following command to view the 2:1 multiplexer Verilog file (`good_mux.v`) and the associated testbench file (`tb_good_mux.v`) in a text editor.
+   ```bash
+   gvim tb_good_mux.v -o good_mux.v
+   ```
+
+2. **Simulate the design**:
+   Compile the Verilog files using iVerilog:
+   ```bash
+   iverilog good_mux.v tb_good_mux.v
+   ```
+
+3. **Run the compiled output**:
+   ```bash
+   ./a.out
+   ```
+
+4. **View the waveform in GTKWave**:
+   The simulation will generate a `.vcd` file (Value Change Dump) which can be viewed in GTKWave.
+   ```bash
+   gtkwave tb_good_mux.vcd
+   ```
+
+_Screenshots of the terminal window and the GTKWave waveform:_
+
+![Screenshot from 2024-10-21 12-07-26](https://github.com/user-attachments/assets/59c0a857-80bf-404d-b60a-c219bfe48004)
+
+
+</details>
+
+<details>
+<summary>Lab 3: Synthesis of a 2:1 Multiplexer Using Yosys</summary>
+<br>
+	
+#### Objective:
+In this lab, we will perform logic synthesis of the 2:1 multiplexer designed earlier using **Yosys**, an open-source synthesis tool. The synthesized output will be a gate-level netlist, which can then be used for downstream steps such as placement and routing.
+
+
+#### About Yosys:
+
+**Yosys** is a widely-used open-source synthesis tool that converts Verilog RTL (Register Transfer Level) code into a gate-level netlist. The netlist represents the design in terms of logic gates, which can be implemented in physical hardware. Yosys applies various optimization techniques to reduce redundant logic, improve timing, and map the design to standard cells from a given technology library, such as SKY130.
+
+The synthesis process in Yosys generally involves:
+- **Reading the Verilog Design**: Yosys reads the RTL description of the design.
+- **Optimization**: It optimizes the logic by removing redundant gates and simplifying the structure.
+- **Mapping**: Yosys maps the optimized design to the gates defined in a technology-specific library (SKY130 in this case).
+- **Generating Netlist**: Finally, it produces a gate-level netlist, a structural representation of the design in terms of logic gates and their interconnections.
+
+Yosys is essential for transforming high-level RTL designs into gate-level hardware descriptions ready for fabrication. In this lab, we will use Yosys to synthesize the 2:1 multiplexer design.
+
+---
+
+#### Steps for Yosys Synthesis:
+
+1. **Invoke Yosys**:
+   Start the Yosys interactive shell with the command:
+   ```bash
+   yosys
+   ```
+
+2. **Load the SKY130 Standard Library**:
+   Yosys requires a technology library to map the Verilog design to real gates. Load the SKY130 standard library using the following command:
+   ```bash
+   read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+   ```
+
+3. **Read the Verilog Design**:
+   Import the 2:1 multiplexer Verilog file into Yosys for synthesis:
+   ```bash
+   read_verilog good_mux.v
+   ```
+
+4. **Synthesize the Top-Level Module**:
+   Instruct Yosys to synthesize the top-level module (`good_mux`):
+   ```bash
+   synth -top good_mux
+   ```
+   During this step, Yosys will optimize the design by minimizing logic redundancy, reordering gates, and potentially merging equivalent components.
+
+5. **Map the Design to the Standard Library**:
+   Yosys will then map the optimized RTL design to the gates defined in the loaded SKY130 library:
+   ```bash
+   abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+   ```
+   The ABC tool within Yosys handles this mapping process, ensuring the design conforms to the available cells in the standard library.
+
+6. **Visualize the Generated Logic**:
+   To view the synthesized design's gate-level schematic, use the following command:
+   ```bash
+   show
+   ```
+   This command opens an interactive viewer showing the interconnected gates, making it easier to understand the generated hardware logic.
+
+7. **Save the Netlist**:
+   After synthesis, save the gate-level netlist to a Verilog file:
+   ```bash
+   write_verilog -noattr good_mux_netlist.v
+   ```
+   You can open and inspect this netlist to see how the RTL design was transformed into gates:
+   ```bash
+   !gvim good_mux_netlist.v
+   ```
+
+_Screenshots of the Yosys flow and the generated logic diagram_:
+
+![Screenshot from 2024-10-21 12-10-16](https://github.com/user-attachments/assets/6e8d5a5c-ff99-4270-96de-f1a861a4f8cc)
+![Screenshot from 2024-10-21 12-11-29](https://github.com/user-attachments/assets/6ec7152f-0999-476a-b1bc-576ee0e0a1ab)
+![Screenshot from 2024-10-21 12-21-24](https://github.com/user-attachments/assets/3eb4a73b-1784-4b8d-96c4-dc09493669e0)
+
+
+</details>
+
+
+</details>
+
+
+</details>
