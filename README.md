@@ -2888,6 +2888,8 @@ The `iverilog` command compiles the design and outputs an executable named `a.ou
     gtkwave tb_dff_const1.vcd
    ```
 
+![Screenshot from 2024-10-21 18-32-36](https://github.com/user-attachments/assets/b312c34a-16b5-44bc-b59f-5acd689b4226)
+
 **Observation:** The waveform indicates that the output \( Q \) is high whenever the reset signal is low, showing that the reset operation is independent of the clock edge.
 
 **Synthesis:**
@@ -2909,6 +2911,8 @@ Start Yosys and execute the following commands:
     synth -top dff_const1
    ```
 
+![Screenshot from 2024-10-21 18-40-35](https://github.com/user-attachments/assets/2b18eca5-8a14-4d8d-b6c4-d4caeb943fb1)
+
 Generate the netlist with:
 
    ```bash
@@ -2920,6 +2924,8 @@ To create a graphical representation of the synthesized design, use:
    ```bash
     show
    ```
+
+![Screenshot from 2024-10-21 18-40-59](https://github.com/user-attachments/assets/c4948e54-10e2-4f33-a810-bf24371414ef)
 
 **Observation:** Since the reset condition does not rely on the clock edge, the D Flip-Flop remains unchanged in the synthesized output.
 
@@ -2988,6 +2994,8 @@ To run the simulation and view the waveform:
     gtkwave tb_dff_const2.vcd
    ```
 
+![Screenshot from 2024-10-21 18-37-16](https://github.com/user-attachments/assets/846315d9-6a7e-4c58-8aa8-8d3872619edb)
+
 **Observation:** The waveform reveals that the output \( Q \) is consistently high, regardless of the reset signal.
 
 **Synthesis:**
@@ -3009,6 +3017,8 @@ Start Yosys and run these commands:
     synth -top dff_const2
    ```
 
+![Screenshot from 2024-10-21 18-43-10](https://github.com/user-attachments/assets/297a22b7-4465-44fc-934c-322afec48182)
+
 Generate the netlist with:
 
    ```bash
@@ -3020,6 +3030,10 @@ To visualize the synthesized design, use:
    ```bash
     show
    ```
+
+
+![Screenshot from 2024-10-21 18-43-43](https://github.com/user-attachments/assets/319b15e9-f087-4e95-8ae2-6f12968122d4)
+
 
 **Observation:** The D Flip-Flop has been optimized away, as the output \( Q \) is always high and does not depend on the reset signal.
 
@@ -3088,6 +3102,8 @@ Start Yosys and execute the following commands:
     synth -top dff_const3
    ```
 
+![Screenshot from 2024-10-21 18-46-57](https://github.com/user-attachments/assets/cf20c804-ed6b-46e5-a3fa-bfb0e7364642)
+
 Generate the netlist:
 
    ```bash
@@ -3099,6 +3115,9 @@ To create a graphical representation of the synthesized design:
    ```bash
     show
    ```
+
+![Screenshot from 2024-10-21 18-47-11](https://github.com/user-attachments/assets/28817899-84d5-4044-b649-62c9186f1191)
+
 
 **Observation:** This module illustrates that on reset, \( Q \) is set to 1 while \( q1 \) is reset to 0. On each clock cycle, \( q1 \) is updated to 1, and \( Q \) reflects the value of \( q1 \).
 
@@ -3143,6 +3162,7 @@ Launch Yosys and run the following commands:
     read_verilog dff_const4.v
     synth -top dff_const4
    ```
+![Screenshot from 2024-10-21 18-48-44](https://github.com/user-attachments/assets/d954d657-b695-4473-a554-50848c7b0696)
 
 Generate the netlist:
 
@@ -3155,6 +3175,7 @@ Finally, create a graphical representation:
    ```bash
     show
    ```
+![Screenshot from 2024-10-21 18-48-57](https://github.com/user-attachments/assets/d1ed60d4-80dd-4033-8b1c-b08453f14333)
 
 **Observation:** This module specifies that both \( q \) and \( q1 \) are set to 1 upon a positive edge of reset. Consequently, \( Q \) maintains a value of 1, regardless of clock or reset states.
 
@@ -3199,6 +3220,7 @@ Launch Yosys and execute:
     read_verilog dff_const5.v
     synth -top dff_const5
    ```
+![Screenshot from 2024-10-21 18-51-09](https://github.com/user-attachments/assets/53e4d944-1908-46a5-9dcf-5410acddd590)
 
 Generate the netlist with:
 
@@ -3211,6 +3233,7 @@ Create a graphical representation:
    ```bash
     show
    ```
+![Screenshot from 2024-10-21 18-51-26](https://github.com/user-attachments/assets/6c607f85-0ea5-4c8f-8ed9-b8d19d426b8e)
 
 **Observation:** This module defines a D Flip-Flop that resets both \( q \) and \( q1 \) to 0 on a positive edge of reset. On each clock cycle, \( q1 \) is set to 1, and \( q \) is updated accordingly. Therefore, after the first clock cycle following reset, \( Q \) remains 1.
 
@@ -3253,6 +3276,7 @@ Launch Yosys and run:
     read_verilog counter_opt.v
     synth -top counter_opt
    ```
+![Screenshot from 2024-10-21 18-55-35](https://github.com/user-attachments/assets/d709f510-3580-471e-b559-e3e5e1b87752)
 
 Generate the netlist with:
 
@@ -3265,6 +3289,7 @@ Create a graphical representation:
    ```bash
     show
    ```
+![Screenshot from 2024-10-21 18-55-59](https://github.com/user-attachments/assets/deb39cb1-4a1b-4c94-9902-2eaa714e2c44)
 
 </details>
 
@@ -3303,8 +3328,9 @@ Launch Yosys and execute:
     yosys
     read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
     read_verilog counter_opt2.v
-    synth -top counter_opt2
+    synth -top counter_opt
    ```
+![Screenshot from 2024-10-21 19-02-02](https://github.com/user-attachments/assets/4ae990c4-d14b-4603-adc8-b46c53ea19d6)
 
 Generate the netlist with:
 
@@ -3317,6 +3343,7 @@ Finally, create a graphical representation:
    ```bash
     show
    ```
+![Screenshot from 2024-10-21 19-02-28](https://github.com/user-attachments/assets/a46ad1d8-3f47-4a04-a248-de952a7997f9)
 
   </details>
 
