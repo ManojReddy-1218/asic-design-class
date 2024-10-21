@@ -3377,6 +3377,7 @@ iverilog ternary_operator_mux.v tb_ternary_operator_mux.v
 ./a.out
 gtkwave tb_ternary_operator_mux.vcd
 ```
+![Screenshot from 2024-10-21 20-19-43](https://github.com/user-attachments/assets/74904c0f-cf5a-4f60-9c49-b1ce05975a51)
 
 ### Synthesis:
 This will invoke/start Yosys.
@@ -3404,11 +3405,15 @@ abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 ```bash
 show
 ```
+![Screenshot from 2024-10-21 20-23-09](https://github.com/user-attachments/assets/711af227-7e78-4366-9a99-eacc83dec86d)
+
 ### To See the Netlist:
 ```bash
 write_verilog -noattr ternary_operator_mux_net.v
 !gvim ternary_operator_mux_net.v
 ```
+![Screenshot from 2024-10-21 20-25-08](https://github.com/user-attachments/assets/8624c46a-e43b-4951-b9c3-75549cbee1e2)
+
 ### Gate Level Synthesis (GLS)
 
 ### Command Steps:
@@ -3434,6 +3439,7 @@ gtkwave tb_ternary_operator_mux.vcd
 ```
 
 Below is the Snapshot of the above commands and the resultant Waveforms:
+![Screenshot from 2024-10-21 20-31-18](https://github.com/user-attachments/assets/d27d6e78-b964-4def-ae88-ab5a67c28607)
 
 These waveforms correspond to the GATE LEVEL SYNTHESIS for the Ternary Operator MUX.
 
@@ -3457,6 +3463,7 @@ iverilog bad_mux.v tb_bad_mux.v
 ./a.out
 gtkwave tb_bad_mux.vcd
 ```
+![Screenshot from 2024-10-21 20-36-54](https://github.com/user-attachments/assets/c9cfa574-c89b-4312-9aa6-0e47e03690a7)
 
 From the waveform, it can be observed that the output y changes only when there is a change in the select line, completely ignoring the change in i0 and i1, which should also change the output y. Thus, this design is that of a bad MUX.
 
@@ -3485,11 +3492,14 @@ abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 ```bash
 show
 ```
+![Screenshot from 2024-10-21 20-38-02](https://github.com/user-attachments/assets/c5019258-51e7-4858-83df-3d1092ebd76e)
+
 ### To See the Netlist:
 ```bash
 write_verilog -noattr bad_mux_net.v
 !gvim bad_mux_net.v
 ```
+![Screenshot from 2024-10-21 20-39-23](https://github.com/user-attachments/assets/bf8ad5a8-d84c-4d32-97be-334df23669ca)
 
 From the waveform, it can be observed that the output y changes only when there is a change in the select line, completely ignoring the change in i0 and i1, which should also change the output y. Thus, this design is that of a bad MUX.
 
