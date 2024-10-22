@@ -2411,12 +2411,70 @@ We will synthesize the previously mentioned types of D-Flip-Flops using Yosys.
 </details>
 
 </details>
+<details>
+	<summary> MUL 2</summary>
+	<br>
+	
+## Multiplication by 2
 
+In this tutorial, we learn that specific multiplier hardware is not necessary for multiplying a number by 2. This operation can be easily achieved by concatenating the number with a zero in the least significant bit (LSB).
 
+### Steps:
+1. **yosys**
+2. **read_liberty** -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. **read_verilog** mult_2.v
+4. **synth** -top mul2
+5. **abc** -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+6. **show**
+7. **write_verilog** -noattr mul2_net.v
+8. **!gvim** mul2_net.v
+
+### Design:
+```verilog
+module mul2(input [2:0]a, output [3:0]y);
+	assign y=a*2;
+endmodule
+```
+![Screenshot from 2024-10-22 11-11-48](https://github.com/user-attachments/assets/583ef487-6aec-4e6f-91ce-75fb4da66177)
+![Screenshot from 2024-10-22 11-10-53](https://github.com/user-attachments/assets/75f7f2c8-7659-4fda-8b71-60ca2a43a4df)
+![Screenshot from 2024-10-22 11-11-42](https://github.com/user-attachments/assets/33ed86e8-6725-4040-bd42-b443665571a1)
+
+</details>
+<details>
+	<summary>MUL 8</summary>
+	<br>
+
+## Multiplication by 8
+
+In this tutorial, we discover that specific multiplier hardware is not needed for multiplying a number by 9. This operation can be easily accomplished by concatenating the number with itself.
+
+### Steps:
+1. **yosys**
+2. **read_liberty** -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+3. **read_verilog** mult_8.v
+4. **synth** -top mult8
+5. **abc** -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+6. **show**
+7. **write_verilog** -noattr mul8_net.v
+8. **!gvim** mul8_net.v
+
+### Design:
+```verilog
+module mul8(input [2:0]a, output [5:0]y);
+	assign y=a*8;
+endmodule
+```
+![Screenshot from 2024-10-22 11-17-29](https://github.com/user-attachments/assets/ca4b5618-fd30-4a91-be89-f0f82e8546b5)
+![Screenshot from 2024-10-22 11-17-21](https://github.com/user-attachments/assets/a08c463f-bcef-44f5-afc9-5012b1085a28)
+![Screenshot from 2024-10-22 11-18-03](https://github.com/user-attachments/assets/72760a20-5bfc-43f9-b53c-3bf6891b1c0e)
+
+</details>
 </details>
 
 
 </details>
+
+---
 <details>
   <summary> Day-3</summary>
 <br>
