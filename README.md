@@ -3733,13 +3733,16 @@ The goal of this task is to synthesize the RISC-V design and compare its output 
    Synthesize the top-level module `rvmyth`:
 ```bash
    synth -top rvmyth
+   abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+   show
 ```
 ![Screenshot from 2024-10-23 21-49-59](https://github.com/user-attachments/assets/60799757-1a12-4cab-9b3d-817aaeaad03c)
 ![Screenshot from 2024-10-23 21-50-11](https://github.com/user-attachments/assets/ba6fa5a1-965c-412a-8ae2-bf28bb7e048a)
+![Screenshot 2024-10-23 213342](https://github.com/user-attachments/assets/ee01fdcf-c276-4964-afe6-5b5bbfb08bfe)
+
 7. **Generate the netlist:**  
    After synthesis, generate the netlist and inspect it:
-```
-   abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib  
+```  
    write_verilog -noattr rvmyth.v  
    !gvim rvmyth.v  
    exit
