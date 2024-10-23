@@ -3742,6 +3742,8 @@ The goal of this task is to synthesize the RISC-V design and compare its output 
    !gvim rvmyth.v  
    exit
 ```
+![Screenshot from 2024-10-23 21-49-59](https://github.com/user-attachments/assets/60799757-1a12-4cab-9b3d-817aaeaad03c)
+![Screenshot from 2024-10-23 21-50-11](https://github.com/user-attachments/assets/ba6fa5a1-965c-412a-8ae2-bf28bb7e048a)
 
 ### Simulate the Synthesized Design:
 
@@ -3770,5 +3772,7 @@ The goal of this task is to synthesize the RISC-V design and compare its output 
 
 10. **Comparison of Functionality vs Synthesized Output:**  
     Finally, compare the waveforms of the functional and synthesized simulations to verify correctness.
+![Screenshot from 2024-10-24 00-28-27](https://github.com/user-attachments/assets/fcc2b8c7-4b28-4f29-b19f-727f3a5a2383)
+![Screenshot from 2024-10-23 22-00-37](https://github.com/user-attachments/assets/4b643840-6e22-4ad3-98aa-4cee743c0565)
 
 </details>
