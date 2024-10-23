@@ -3683,3 +3683,92 @@ Below is the Snapshot of the above commands and the resultant Waveforms:
 These waveforms correspond to the GATE LEVEL SYNTHESIS for the Blocking Caveat.
 
 </details>
+</details>
+<details> 
+	<summary>ASIC Lab 9</summary>
+	<br>
+
+# TASK 11: Synthesize RISC-V and Compare Output with Functional Simulations
+ 
+**Objective:**  
+The goal of this task is to synthesize the RISC-V design and compare its output with functional simulations.
+
+---
+
+### Steps:
+
+1. **Copy the source folder:**  
+   Begin by copying the `src` folder from the VSDBabySoC directory into the `vlsi` folder. Then, copy it into the `sky130RTLDesignAndSynthesisWorkshop` directory using the following commands:
+```
+   sudo -i  
+   cd /home/yerasi-manoj-reddy/vlsi/  
+   cp -r src sky130RTLDesignAndSynthesisWorkshop/
+```
+2. **Navigate to the required directory:**  
+   Move to the target directory where synthesis will take place:
+```
+   cd ~  
+   cd /home/yerasi-manoj-reddy/vlsi/sky130RTLDesignAndSynthesisWorkshop/src/module
+```
+
+### Synthesis:
+
+3. **Start Yosys for synthesis:**  
+   Invoke Yosys by entering the following command:
+ ```
+   yosys
+```
+4. **Read the library:**  
+   Load the standard cell library required for synthesis:
+```
+   read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+```
+5. **Read the Verilog design files:**  
+   Import the required Verilog files for clock gating and RISC-V designs:
+```
+   read_verilog clk_gate.v  
+   read_verilog rvmyth.v
+```
+6. **Synthesize the design:**  
+   Synthesize the top-level module `rvmyth`:
+```bash
+   synth -top rvmyth
+```
+7. **Generate the netlist:**  
+   After synthesis, generate the netlist and inspect it:
+```
+   abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib  
+   write_verilog -noattr rvmyth.v  
+   !gvim rvmyth.v  
+   exit
+```
+
+### Simulate the Synthesized Design:
+
+8. **Observe the synthesized RISC-V output waveform:**  
+   Use the following commands to run the simulation and view the waveforms:
+```
+   iverilog ../../my_lib/verilog_model/primitives.v ../../my_lib/verilog_model/sky130_fd_sc_hd.v rvmyth.v testbench.v vsdbabysoc.v avsddac.v avsdpll.v clk_gate.v  
+   ls  
+   ./a.out  
+   gtkwave dump.vcd
+```
+
+### Functional Simulations:
+
+9. **Simulate functional design:**  
+   Navigate to the VSDBabySoC directory and simulate the pre-synthesized version of the design:
+```
+   cd ~  
+   cd VSDBabySoC  
+   iverilog -o ./pre_synth_sim.out -DPRE_SYNTH_SIM src/module/testbench.v -I src/include -I src/module/  
+   ./pre_synth_sim.out  
+   gtkwave pre_synth_sim.vcd
+```
+
+### Comparison:
+
+10. **Comparison of Functionality vs Synthesized Output:**  
+    Finally, compare the waveforms of the functional and synthesized simulations to verify correctness.
+
+</details>
