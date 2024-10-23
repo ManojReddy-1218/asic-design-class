@@ -3773,6 +3773,10 @@ The goal of this task is to synthesize the RISC-V design and compare its output 
 
 10. **Comparison of Functionality vs Synthesized Output:**  
     Finally, compare the waveforms of the functional and synthesized simulations to verify correctness.
+## O1
 ![Screenshot from 2024-10-24 00-28-27](https://github.com/user-attachments/assets/fcc2b8c7-4b28-4f29-b19f-727f3a5a2383)
+## O2
 ![Screenshot from 2024-10-24 01-45-42](https://github.com/user-attachments/assets/21019be8-0029-4536-92e8-2164504b7985)
 
+## Observation:
+we can see that O1 = O2 so functionality is equal to synthesized Output.
