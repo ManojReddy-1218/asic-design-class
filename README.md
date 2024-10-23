@@ -3734,6 +3734,8 @@ The goal of this task is to synthesize the RISC-V design and compare its output 
 ```bash
    synth -top rvmyth
 ```
+![Screenshot from 2024-10-23 21-49-59](https://github.com/user-attachments/assets/60799757-1a12-4cab-9b3d-817aaeaad03c)
+![Screenshot from 2024-10-23 21-50-11](https://github.com/user-attachments/assets/ba6fa5a1-965c-412a-8ae2-bf28bb7e048a)
 7. **Generate the netlist:**  
    After synthesis, generate the netlist and inspect it:
 ```
@@ -3742,8 +3744,7 @@ The goal of this task is to synthesize the RISC-V design and compare its output 
    !gvim rvmyth.v  
    exit
 ```
-![Screenshot from 2024-10-23 21-49-59](https://github.com/user-attachments/assets/60799757-1a12-4cab-9b3d-817aaeaad03c)
-![Screenshot from 2024-10-23 21-50-11](https://github.com/user-attachments/assets/ba6fa5a1-965c-412a-8ae2-bf28bb7e048a)
+![Screenshot from 2024-10-24 01-06-32](https://github.com/user-attachments/assets/20a8c0e4-1b0a-4c7a-9f9b-8f0618fb6936)
 
 ### Simulate the Synthesized Design:
 
