@@ -3839,9 +3839,15 @@ Execute the following commands to perform the analysis:
 cd /home/yerasi-manoj-reddy/OpenSTA/app
 ./sta
 
-read_liberty /home/yerasi-manoj-reddy/OpenSTA/lab10/sky130_fd_sc_hd__tt_025C_1v80.lib
-read_verilog /home/yerasi-manoj-reddy/OpenSTA/lab10/manoj_riscv_netlist.v
-link_design rvmyth
+read_liberty -min ./lib/sta/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_liberty -max ./lib/sta/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_liberty -min ./lib/avsdpll.lib
+read_liberty -max ./lib/avsdpll.lib
+read_liberty -min ./lib/avsddac.lib
+read_liberty -max ./lib/avsddac.lib
+read_verilog ./src/module/vsdbabysoc_synth.v
+link_design vsdbabysoc
+read_sdc ./src/sdc/sta_post_synth.sdc
 
 create_clock -name clk -period 9.8 [get_ports clk]
 set_clock_uncertainty [expr 0.05 * 9.8] -setup [get_clocks clk]
