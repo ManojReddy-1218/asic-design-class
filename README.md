@@ -3839,6 +3839,24 @@ Execute the following commands to perform the analysis:
 cd /home/yerasi-manoj-reddy/OpenSTA/app
 ./sta
 
+read_liberty /home/yerasi-manoj-reddy/OpenSTA/lab10/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog /home/yerasi-manoj-reddy/OpenSTA/lab10/manoj_riscv_netlist.v
+link_design rvmyth
+
+create_clock -name clk -period 9.8 [get_ports clk]
+set_clock_uncertainty [expr 0.05 * 9.8] -setup [get_clocks clk]
+set_clock_uncertainty [expr 0.08 * 9.8] -hold [get_clocks clk]
+set_clock_transition [expr 0.05 * 9.8] [get_clocks clk]
+set_input_transition [expr 0.08 * 9.8] [all_inputs]
+
+
+```
+To execute the OpenSTA and obtain the timing reports, run the below command,
+```
+sta scripts/sta.conf
+```
+Following are contents of the sta.conf file,
+```
 read_liberty -min ./lib/sta/sky130_fd_sc_hd__tt_025C_1v80.lib
 read_liberty -max ./lib/sta/sky130_fd_sc_hd__tt_025C_1v80.lib
 read_liberty -min ./lib/avsdpll.lib
@@ -3848,19 +3866,15 @@ read_liberty -max ./lib/avsddac.lib
 read_verilog ./src/module/vsdbabysoc_synth.v
 link_design vsdbabysoc
 read_sdc ./src/sdc/sta_post_synth.sdc
-
-create_clock -name clk -period 9.8 [get_ports clk]
-set_clock_uncertainty [expr 0.05 * 9.8] -setup [get_clocks clk]
-set_clock_uncertainty [expr 0.08 * 9.8] -hold [get_clocks clk]
-set_clock_transition [expr 0.05 * 9.8] [get_clocks clk]
-set_input_transition [expr 0.08 * 9.8] [all_inputs]
-
-report_checks -path_delay max
-report_checks -path_delay min
 ```
 ![Screenshot from 2024-10-28 21-41-13](https://github.com/user-attachments/assets/45c4dc83-6861-4a7b-a1d4-c4191a7a9743)
-
+```
+report_checks -path_delay max
+```
 ![Screenshot from 2024-10-28 20-38-02](https://github.com/user-attachments/assets/070794d1-5836-4dbd-a31b-3e98753eedb5)
+```
+report_checks -path_delay min
+```
 ![Screenshot from 2024-10-28 20-38-09](https://github.com/user-attachments/assets/789a3cd2-c367-41cc-83b2-92e77b703bcc)
 
 </details>
