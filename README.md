@@ -3783,3 +3783,78 @@ The goal of this task is to synthesize the RISC-V design and compare its output 
 
 ## Observation:
 we can see that O1 = O2 so functionality is equal to synthesized Output.
+</details>
+<details>
+	<summary> ASIC Lab 10</summary>
+	<br>
+
+# Static Timing Analysis for a Synthesized RISC-V Core with OpenSTA 
+## Installation of Tools
+
+### CUDD
+Begin by downloading CUDD from this **[source](https://github.com/davidkebo/cudd/blob/main/cudd_versions/cudd-3.0.0.tar.gz)**. Once downloaded, move the file to your home directory for easy access.
+
+```bash
+cd
+tar xvfz cudd-3.0.0.tar.gz
+cd cudd-3.0.0
+./configure
+make
+```
+![Screenshot from 2024-10-28 21-39-38](https://github.com/user-attachments/assets/80f297e2-dd87-4e3b-9237-2cd53cbbe8ae)
+
+### openSTA Setup
+
+Next, install openSTA. Start by updating your system and ensuring you have the necessary packages.
+
+```bash
+cd
+sudo apt-get install cmake clang gcc tcl swig bison flex
+
+git clone https://github.com/parallaxsw/OpenSTA.git
+cd OpenSTA
+cmake -DCUDD_DIR=/home/yerasi-manoj-reddy/cudd-3.0.0
+make
+app/sta
+```
+
+```bash
+cd /home/yerasi-manoj-reddy/OpenSTA
+mkdir lab10
+```
+
+Ensure you move all the necessary files into the newly created directory named `lab10`.
+
+## Timing Analysis Procedure
+
+When conducting timing analysis, adhere to the following parameters:
+
+- The specified clock period is 9.8 nanoseconds.
+- The setup uncertainty and clock transition should be 5% of the clock period.
+- The hold uncertainty and data transition should account for 8% of the clock period.
+
+Execute the following commands to perform the analysis:
+
+```bash
+cd /home/yerasi-manoj-reddy/OpenSTA/app
+./sta
+
+read_liberty /home/yerasi-manoj-reddy/OpenSTA/lab10/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog /home/yerasi-manoj-reddy/OpenSTA/lab10/manoj_riscv_netlist.v
+link_design rvmyth
+
+create_clock -name clk -period 9.8 [get_ports clk]
+set_clock_uncertainty [expr 0.05 * 9.8] -setup [get_clocks clk]
+set_clock_uncertainty [expr 0.08 * 9.8] -hold [get_clocks clk]
+set_clock_transition [expr 0.05 * 9.8] [get_clocks clk]
+set_input_transition [expr 0.08 * 9.8] [all_inputs]
+
+report_checks -path_delay max
+report_checks -path_delay min
+```
+![Screenshot from 2024-10-28 21-41-13](https://github.com/user-attachments/assets/45c4dc83-6861-4a7b-a1d4-c4191a7a9743)
+
+![Screenshot from 2024-10-28 20-38-02](https://github.com/user-attachments/assets/070794d1-5836-4dbd-a31b-3e98753eedb5)
+![Screenshot from 2024-10-28 20-38-09](https://github.com/user-attachments/assets/789a3cd2-c367-41cc-83b2-92e77b703bcc)
+
+</details>
