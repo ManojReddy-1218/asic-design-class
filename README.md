@@ -3926,23 +3926,29 @@ for {set i 1} {$i <= [array size list_of_lib_files]} {incr i} {
     report_wns -digits {4} >> /home/yerasi-manoj-reddy/VSDBabySoC/src/sta_output/sta_wns.txt
 }
 ```
+![Screenshot from 2024-11-05 01-50-34](https://github.com/user-attachments/assets/cba1609d-190d-458c-99f6-4d854145d360)
+
+![Screenshot from 2024-11-05 01-30-21](https://github.com/user-attachments/assets/aa03fe73-3588-44cb-91a9-2dd4a91f8e63)
+
 
 The SDC file used for generating clock and data constraints is given below:
 
 # SDC constraints for VSDBabySoC
 ```
-create_clock -name CLK -period 9.8 [get_ports CLK]
-set_clock_uncertainty [expr 0.05 * 9.8] -setup [get_clocks CLK]
-set_clock_uncertainty [expr 0.08 * 9.8] -hold [get_clocks CLK]
-set_clock_transition [expr 0.05 * 9.8] [get_clocks CLK]
-set_input_transition [expr 0.08 * 9.8] [all_inputs]
-
-set_input_transition [expr $PERIOD * 0.08] [get_ports ENB_CP]
-set_input_transition [expr $PERIOD * 0.08] [get_ports ENB_VCO]
+set PERIOD 9.75
+set_units -time ns
+create_clock [get_ports {clk}] -name clk -period $PERIOD
+set_clock_uncertainty -setup  [expr $PERIOD * 0.05] [get_clocks clk]
+set_clock_transition [expr $PERIOD * 0.05] [get_clocks clk]
+set_clock_uncertainty -hold [expr $PERIOD * 0.08] [get_clocks clk]
+set_input_transition [expr $PERIOD * 0.08] [get_ports ENb_CP]
+set_input_transition [expr $PERIOD * 0.08] [get_ports ENb_VCO]
 set_input_transition [expr $PERIOD * 0.08] [get_ports REF]
 set_input_transition [expr $PERIOD * 0.08] [get_ports VCO_IN]
 set_input_transition [expr $PERIOD * 0.08] [get_ports VREFH]
 ```
+![Screenshot from 2024-11-05 01-52-18](https://github.com/user-attachments/assets/a5201d7a-f418-4e9d-8a39-d807fe2a56bd)
+
 Run below commands on terminal to source the `sta_pvt.tcl` file:
 ```
 source /home/yerasi-manoj-reddy/VSDBabySoC/src/tcl/sta_pvt.tcl
