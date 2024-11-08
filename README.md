@@ -3947,7 +3947,8 @@ set_input_transition [expr $PERIOD * 0.08] [get_ports REF]
 set_input_transition [expr $PERIOD * 0.08] [get_ports VCO_IN]
 set_input_transition [expr $PERIOD * 0.08] [get_ports VREFH]
 ```
-![Screenshot from 2024-11-05 01-52-18](https://github.com/user-attachments/assets/a5201d7a-f418-4e9d-8a39-d807fe2a56bd)
+![Screenshot from 2024-11-08 13-00-18](https://github.com/user-attachments/assets/6599984d-2491-472f-ae8a-578cf625278d)
+
 
 Run below commands on terminal to source the `sta_pvt.tcl` file:
 ```
