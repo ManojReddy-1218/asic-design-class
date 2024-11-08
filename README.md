@@ -3935,7 +3935,7 @@ The SDC file used for generating clock and data constraints is given below:
 
 # SDC constraints for VSDBabySoC
 ```
-set PERIOD 9.75
+set PERIOD 9.80
 set_units -time ns
 create_clock [get_ports {clk}] -name clk -period $PERIOD
 set_clock_uncertainty -setup  [expr $PERIOD * 0.05] [get_clocks clk]
