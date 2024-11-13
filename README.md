@@ -4175,7 +4175,6 @@ exit
 ```
 
 </details>
-</details>
 <details>
 	<summary> Day 3</summary>
 	<br>
@@ -4331,6 +4330,145 @@ magic -d XR &
   drc why
   ```
 - **Screenshots of Magic with Corrected DRC Implementations**
+![23](https://github.com/user-attachments/assets/cba3ef20-92db-4bdb-92d6-e198da3ddef1)
+# 3. Spice Extraction of Inverter in Magic
+
+## Commands for Spice Extraction in Magic
+Below are the commands used in the `tkcon` window of Magic to extract the SPICE netlist from the custom inverter layout.
+
+```
+# Step 1: Check the current directory
+pwd
+
+# Step 2: Extraction command to generate .ext format
+extract all
+
+# Step 3: Enable parasitic extraction before converting to SPICE
+ext2spice cthresh 0 rthresh 0
+
+# Step 4: Convert the extracted .ext file to a SPICE file
+ext2spice
 ```
 
+### Screenshots
+- **tkcon window after running the extraction commands:**
+![24](https://github.com/user-attachments/assets/bd21aca6-1210-4488-b901-b5432e726e64)
+
+- **Generated SPICE file:**
+![25](https://github.com/user-attachments/assets/f38339c4-c70b-498b-992e-4a896dd822ed)
+
+---
+
+# 4. Editing the SPICE Model File for Simulation
+
+### Additional Steps for SPICE Model Editing
+Once the SPICE file is extracted, further modifications are required to prepare it for simulation with `ngspice`.
+
+**Measuring the unit distance in the layout grid:**
+![27](https://github.com/user-attachments/assets/2d99b281-7aca-416d-b068-281e0c63e32c)
+
+
+**Final edited SPICE file ready for simulation:**
+![28](https://github.com/user-attachments/assets/f88be0b4-9951-40a2-b66e-2bcb72e10e10)
+
+
+---
+
+These steps cover the process of extracting a SPICE netlist from a custom layout in Magic, including enabling parasitic extraction and editing the SPICE model for accurate simulation results.
+
+
+### 5. Post-Layout ngspice Simulations
+
+#### Commands for ngspice Simulation
+The following commands are used to load and run the post-layout simulations using `ngspice`:
+```
+# Load the SPICE file for simulation
+ngspice sky130_man.spice
+
+# After entering ngspice, plot the required signals
+plot y vs time a
+```
+
+#### Simulation Screenshots
+
+Below are screenshots taken during the ngspice simulation run:
+
+- Loading and running the simulation:
+![29](https://github.com/user-attachments/assets/2175e0a4-8a13-4346-a2ee-864dd480ace0)
+
+- Plotting the output waveform:
+![30](https://github.com/user-attachments/assets/d5217ae9-edd9-4849-9db8-78bbb8a1a38c)
+![31](https://github.com/user-attachments/assets/f01b2087-e04e-4498-ab7b-6722d0d63e35)
+
+### Transition Time Calculations
+
+#### Rise Transition Time
+The rise transition time is calculated as:
+Rise Transition Time = Time to reach 80% - Time to reach 20%
+- 20% of output = 660 mV
+- 80% of output = 2.64 V
+
+Screenshots:
+- For 20% transition:
+![32](https://github.com/user-attachments/assets/ea90f668-4906-4f01-b059-685436a2975d)
+![33](https://github.com/user-attachments/assets/847b2c7b-632a-45be-b87d-d914ec980fe2)
+
+- For 80% transition:
+![34](https://github.com/user-attachments/assets/a980a559-0567-4297-ba91-578d72132abe)
+![35](https://github.com/user-attachments/assets/b9a62fa4-1243-444f-b30e-b4c60ae99b6f)
+
+Calculation:
+Rise Transition Time = 2.24638 ns - 2.18242 ns = 0.06396 ns = 63.96 ps
+
+#### Fall Transition Time
+The fall transition time is calculated as:
+Fall Transition Time = Time to fall to 20% - Time to fall to 80%
+- 20% of output = 660 mV
+- 80% of output = 2.64 V
+
+Screenshots:
+- For 20% transition:
+![39_20%](https://github.com/user-attachments/assets/911c949d-a6e1-4660-8a8c-b58ede9984dd)
+![40](https://github.com/user-attachments/assets/5138f8ee-3c2c-4d63-8fae-ef18ce43bfad)
+
+- For 80% transition:
+![41](https://github.com/user-attachments/assets/774ff292-f7b1-4356-af0e-0f05e8e326cf)
+![42](https://github.com/user-attachments/assets/99cc9975-a092-4c86-85f4-d133c4076840)
+
+
+Calculation:
+Fall Transition Time = 4.0955 ns - 4.0536 ns = 0.0419 ns = 41.9 ps
+
+### Cell Delay Calculations
+
+#### Rise Cell Delay
+The rise cell delay is calculated as:
+Rise Cell Delay = Time for output to reach 50% - Time for input to fall to 50%
+- 50% of 3.3 V = 1.65 V
+
+Screenshots:
+![36](https://github.com/user-attachments/assets/f593b8e5-98e1-4306-a5be-f78d8505ac68)
+![37](https://github.com/user-attachments/assets/e4d8f91d-589f-44d9-8863-27657e2e54fa)
+
+
+Calculation:
+Rise Cell Delay = 2.21144 ns - 2.15008 ns = 0.06136 ns = 61.36 ps
+
+#### Fall Cell Delay
+The fall cell delay is calculated as:
+Fall Cell Delay = Time for output to fall to 50% - Time for input to rise to 50%
+- 50% of 3.3 V = 1.65 V
+
+Screenshots:
+![43](https://github.com/user-attachments/assets/3a34b100-2e01-4261-9928-17fd8cff503c)
+![44](https://github.com/user-attachments/assets/1d427821-c10f-4659-8964-367c81f14276)
+
+
+Calculation:
+Fall Cell Delay = 4.07 ns - 4.05 ns = 0.02 ns = 20 ps
+
+These results highlight the performance metrics for the rise and fall transitions, as well as the cell delays, which are crucial for evaluating the timing behavior of the post-layout design.
+
+
+</details>
 </details>
