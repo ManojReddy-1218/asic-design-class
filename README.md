@@ -3974,3 +3974,205 @@ The analysis report shows the following key points:
 The total negative slack and worst negative slacks are provided in the detailed slacks report screenshots.
 
 </details>
+<details>
+	<summary>ASIC Lab 12</summary>
+	<br>
+
+ # Digital VLSI SoC Design and Planning
+
+ <details>
+<summary>Day 1</summary>
+	 <br>
+	 
+### Section 1: Introduction to Open-Source EDA, OpenLANE, and Sky130 PDK  
+
+**Theory**:  
+This section focuses on the fundamentals of open-source EDA tools, specifically using OpenLANE and the Sky130 PDK.
+
+**Implementation**  
+**Tasks**:
+1. Run the `picorv32a` design synthesis using the OpenLANE flow and generate relevant outputs.
+
+#### OpenLANE Flow - Synthesis Commands
+```
+# Navigate to the OpenLANE working directory
+cd Desktop/work/tools/openlane_working_dir/openlane
+
+# Start Docker container
+docker
+
+# Launch OpenLANE in interactive mode
+./flow.tcl -interactive
+
+# Load OpenLANE package
+package require openlane 0.9
+
+# Prepare design for 'picorv32a'
+prep -design picorv32a
+
+# Run synthesis
+run_synthesis
+
+# Exit OpenLANE
+exit
+
+# Exit Docker
+exit
+```
+**Screenshots**:  
+![1](https://github.com/user-attachments/assets/10bf6d0f-df1f-4509-b9df-7a63a15264c2)
+![2](https://github.com/user-attachments/assets/f4f64fda-a093-41f3-bb84-b927227198aa)
+
+2. Calculate the **flop ratio**:
+![3](https://github.com/user-attachments/assets/7d1b5a26-aecf-4680-8849-e6b77ebe2f72)
+   **Formula**:  
+   ```
+   Flop Ratio = (Number of D Flip-Flops) / (Total Number of Cells)  
+   DFF Percentage = Flop Ratio * 100
+   ```
+
+   **Results**:
+   ```
+   Flop Ratio = 1613 / 14876 = 0.1084  
+   DFF Percentage = 0.1084 * 100 = 10.84%
+   ```
+---
+
+</details>
+<details>
+	<summary>Day 2</summary>
+	<br>
+	
+### Section 2: Floorplanning and Library Cell Introduction  
+
+**Theory**:  
+This section covers the differences between good and bad floorplanning and introduces library cells.
+
+**Implementation**  
+**Tasks**:
+1. Run the `picorv32a` floorplan using the OpenLANE flow.
+2. Calculate the die area in microns based on the floorplan `.def` file.
+3. Load the floorplan `.def` file in Magic tool to analyze it.
+4. Perform congestion-aware placement and explore the results in Magic.
+
+   **Die Area Calculation**:
+   ```
+   Area of Die = Die Width (in microns) × Die Height (in microns)
+   ```
+
+#### OpenLANE Flow - Floorplan Commands
+```
+# Navigate to the OpenLANE working directory
+cd Desktop/work/tools/openlane_working_dir/openlane
+
+# Start Docker container
+docker
+
+# Launch OpenLANE in interactive mode
+./flow.tcl -interactive
+
+# Load OpenLANE package
+package require openlane 0.9
+
+# Prepare design for 'picorv32a'
+prep -design picorv32a
+
+# Run synthesis
+run_synthesis
+
+# Run floorplan
+run_floorplan
+```
+**Screenshots**:  
+![4](https://github.com/user-attachments/assets/06dccc75-6396-4596-83bd-29917bfea24b)
+![5](https://github.com/user-attachments/assets/8c54066d-1336-4ac7-9206-6f7e1af672dd)
+
+## 2. Die Area Calculation from `.def` file:
+![6](https://github.com/user-attachments/assets/239301cb-3569-42a8-a494-09b84d742f22)
+
+```
+Unit Distance = 1 Micron  
+Die Width (units) = 660685  
+Die Height (units) = 671405  
+
+Die Width (microns) = 660685 / 1000 = 660.685  
+Die Height (microns) = 671405 / 1000 = 671.405  
+
+Area of Die (square microns) = 660.685 × 671.405 = 443587.21 µm²
+```
+### 3. Load generated floorplan `.def` in Magic tool and explore the floorplan.
+
+#### Commands to Load Floorplan `.def` in Magic (in another terminal)
+```
+# Change directory to path containing generated floorplan .def
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/17-03_12-06/results/floorplan/
+
+# Command to load the floorplan .def in Magic tool
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &
+```
+
+**Screenshots of Floorplan in Magic**:
+- **Generated Floorplan Loaded in Magic**  
+![7](https://github.com/user-attachments/assets/7fb737f4-7e87-4090-9a34-27478ff1254b)
+
+- **Equidistant Placement of Ports**  
+![8](https://github.com/user-attachments/assets/d74af718-122a-4ab9-bc86-a429d9b8ca83)
+
+- **Port Layer Configuration as set through `config.tcl`**  
+![9](https://github.com/user-attachments/assets/2efeaaf7-7831-44ea-9f86-d43e6b3c70e1)
+
+- **Decap Cells and Tap Cells**  
+![10](https://github.com/user-attachments/assets/ee95acaa-690b-4380-9067-e3630cf8b4cd)
+
+- **Diagonally Equidistant Tap Cells**  
+![11](https://github.com/user-attachments/assets/502b7c91-aa4a-41f4-83a0-ac08fb4275a1)
+
+- **Unplaced Standard Cells at the Origin**  
+![12](https://github.com/user-attachments/assets/66002698-95d0-44c4-8396-a4df8a6da452)
+4. Run 'picorv32a' Design Congestion Aware Placement using OpenLANE Flow
+
+#### Command to Run Placement
+```
+# Congestion aware placement by default
+run_placement
+```
+
+**Screenshots of Placement Run**:
+- Screenshot from 2024-03-17 22-44-17  
+![13](https://github.com/user-attachments/assets/922d4e76-30ee-4b49-934f-336adf8f6378)
+
+
+---
+
+### 5. Load Generated Placement `.def` in Magic Tool and Explore the Placement
+
+#### Commands to Load Placement `.def` in Magic (in another terminal)
+```
+# Change directory to path containing generated placement .def
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/17-03_12-06/results/placement/
+
+# Command to load the placement .def in Magic tool
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+```
+
+**Screenshots of Placement in Magic**:
+- **Generated Placement Loaded in Magic**  
+![14](https://github.com/user-attachments/assets/89ee243c-39dc-472d-8585-2b7d31f099ca)
+
+- **Standard Cells Legally Placed**  
+![15](https://github.com/user-attachments/assets/4b2e07b2-712d-4294-ac73-e55b82daab9d)
+
+
+---
+
+#### Commands to Exit from Current Run
+```
+# Exit from OpenLANE flow
+exit
+
+# Exit from OpenLANE flow docker sub-system
+exit
+```
+
+</details>
+</details>
