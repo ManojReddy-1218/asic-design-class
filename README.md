@@ -4468,6 +4468,142 @@ Calculation:
 Fall Cell Delay = 4.07 ns - 4.05 ns = 0.02 ns = 20 ps
 
 These results highlight the performance metrics for the rise and fall transitions, as well as the cell delays, which are crucial for evaluating the timing behavior of the post-layout design.
+# 6. DRC Correction in Magic for Skywater Process
+
+## Objective
+Fix issues in the DRC (Design Rule Check) section of the old Magic tech file for the Skywater process using the periphery rules found [here](https://skywater-pdk.readthedocs.io/en/main/rules/periphery.html).
+
+---
+
+## Step 1: Downloading and Viewing the Corrupted Skywater Process Files
+
+### Commands
+```
+# Change to home directory
+cd
+
+# Download the lab files for DRC correction
+wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz
+
+# Extract the compressed lab files
+tar xfz drc_tests.tgz
+
+# Navigate into the extracted lab folder
+cd drc_tests
+
+# List all files and directories in the current directory
+ls -al
+
+# Open the .magicrc file for editing
+gvim .magicrc
+
+# Open Magic tool with better graphics mode
+magic -d XR &
+```
+
+### Screenshots of Commands Run
+![45](https://github.com/user-attachments/assets/2622c05d-3fe4-4780-a470-73f9cd3710c2)
+![46](https://github.com/user-attachments/assets/0aa11903-e094-4a82-93ba-b820243f3fa8)
+
+### Screenshot of `.magicrc` File
+
+![47](https://github.com/user-attachments/assets/21f6b2e3-ed46-41c7-8cae-90fc2fb5c5d3)
+
+---
+
+## Step 2: Fixing Incorrectly Implemented DRC Rules
+
+### Issue 1: Incorrect `poly.9` Rule
+- The `poly.9` rule was incorrectly implemented, allowing spacing violations below 0.48μm.
+
+**Correction Procedure:**
+- Reviewed the `poly.9` rule, identified the issue, and updated the `sky130A.tech` file.
+
+**Screenshots:**
+- Poly rules correction
+  ![48](https://github.com/user-attachments/assets/b052ec9e-8b44-4143-a465-0c8f3df718ae)
+ ![49](https://github.com/user-attachments/assets/022ec87e-331e-48f1-9d04-ac6cc5cb3031)
+
+- Violations before fix
+
+**Updated DRC Commands in `tkcon` Window:**
+```
+# Load the updated tech file
+tech load sky130A.tech
+
+# Run the DRC check with updated rules
+drc check
+
+# Get error messages for the new violations
+drc why
+```
+
+**Screenshots of Magic Window:**
+![51](https://github.com/user-attachments/assets/ae11c354-4f30-42ee-8208-d67fb5d677e4)
+
+
+---
+
+### Issue 2: Incorrect `difftap.2` Rule
+- The `difftap.2` rule was not properly checking spacing violations below 0.42μm.
+**Correction Procedure:**
+- Reviewed and updated the `difftap.2` rule in the `sky130A.tech` file.
+![50](https://github.com/user-attachments/assets/c04dfbc2-ea4d-477b-bbd0-05d49a6a5ffa)
+
+**Screenshots:**
+![54](https://github.com/user-attachments/assets/b986355d-30c3-4901-9efd-8862989a1393)
+**Updated DRC Commands in `tkcon` Window:**
+```
+# Load the updated tech file
+tech load sky130A.tech
+
+# Run the DRC check with updated rules
+drc check
+
+# Get error messages for the new violations
+drc why
+```
+
+**Screenshot of Magic Window:**
+
+
+---
+
+### Issue 3: Incorrect `nwell.4` Rule
+- The `nwell.4` rule was not identifying violations when no tap was present within the nwell region.
+
+**Correction Procedure:**
+- Fixed the implementation of the `nwell.4` rule and updated the `sky130A.tech` file.
+
+**Screenshots:**
+- Nwell rules correction: 
+- Violations before fix: 
+
+
+**Updated DRC Commands in `tkcon` Window:**
+```
+# Load the updated tech file
+tech load sky130A.tech
+
+# Switch to full DRC check mode
+drc style drc(full)
+
+# Re-run the DRC check
+drc check
+
+# Get error messages for the new violations
+drc why
+```
+
+**Screenshot of Magic Window:**
+![55](https://github.com/user-attachments/assets/64e60ae4-87df-48e6-bf12-fc58340be35a)
+![57](https://github.com/user-attachments/assets/dee2ac75-7eb6-4a05-8920-87755e772b01)
+![56](https://github.com/user-attachments/assets/cfe8537a-508c-4ad9-bef1-f2ecfdbfbeee)
+
+---
+
+## Summary
+The above steps detail how to download the old Skywater process tech files, identify issues in the DRC rules, correct the faulty rules, and validate the corrections using Magic's DRC commands. These fixes ensure adherence to the Sky130 periphery rules.
 
 
 </details>
