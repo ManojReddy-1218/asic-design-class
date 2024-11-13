@@ -4176,3 +4176,161 @@ exit
 
 </details>
 </details>
+<details>
+	<summary> Day 3</summary>
+	<br>
+
+ ### Section 3 - Design Library Cell using Magic Layout and ngspice Characterization
+
+#### Theory
+Implementation details for creating, extracting, and simulating a custom inverter standard cell design using Magic and ngspice.
+
+---
+
+### Section 3 Tasks:
+
+- **Clone Custom Inverter Standard Cell Design from GitHub Repository**
+- **Load the Custom Inverter Layout in Magic and Explore**
+- **SPICE Extraction of Inverter in Magic**
+- **Editing the SPICE Model File for Analysis Through Simulation**
+- **Post-layout ngspice Simulations**
+- **Identify and Fix Issues in DRC Section of Old Magic Tech File**
+
+---
+
+#### 1. Clone Custom Inverter Standard Cell Design from GitHub Repository
+```
+# Change directory to OpenLANE working directory
+cd Desktop/work/tools/openlane_working_dir/openlane
+
+# Clone the repository with custom inverter design
+git clone https://github.com/nickson-jose/vsdstdcelldesign
+
+# Change into the cloned directory
+cd vsdstdcelldesign
+
+# Copy Magic tech file to the current directory
+cp /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech .
+
+# Check directory contents
+ls
+
+# Open custom inverter layout in Magic
+magic -T sky130A.tech sky130_inv.mag &
+```
+
+**Screenshot of Commands Run**  
+- Screenshot of terminal after cloning, navigating, and opening Magic.
+![16](https://github.com/user-attachments/assets/d1e7544f-8342-41c3-a346-1637ba6b78af)
+
+---
+
+#### 2. Load the Custom Inverter Layout in Magic and Explore
+
+**Screenshot of Inverter Layout Loaded in Magic**  
+![17](https://github.com/user-attachments/assets/1fa03241-891c-4d5b-bc5a-10b8cc452a9f)
+
+- **NMOS and PMOS Identified**
+![18](https://github.com/user-attachments/assets/c5380bf8-2be7-486a-98fc-f5bdcf34a0cd)
+
+![19](https://github.com/user-attachments/assets/36f863b1-005f-43eb-a566-7952ecdfb855)
+
+- **Output Y Connectivity to PMOS and NMOS Drain Verified**
+![20](https://github.com/user-attachments/assets/9ddb688e-ca19-4578-8b47-1099d553450d)
+
+
+- **PMOS Source Connected to VDD (VPWR)**
+![image](https://github.com/user-attachments/assets/1ce6dd7c-2d9e-4c04-be52-40bce62901f6)
+
+- **NMOS Source Connected to VSS (VGND)**
+![22](https://github.com/user-attachments/assets/4481752c-0508-409a-939f-2ed7915b88ba)
+
+- **Deleting Layout Section to Test DRC Errors**
+
+---
+
+#### 3. SPICE Extraction of Inverter in Magic
+Commands for SPICE extraction in the tkcon window:
+```
+# Verify current directory
+pwd
+
+# Extract to .ext format
+extract all
+
+# Enable parasitic extraction
+ext2spice cthresh 0 rthresh 0
+
+# Convert .ext file to .spice file
+ext2spice
+```
+
+**Screenshot of tkcon Window**  
+- **SPICE File Generated**
+
+---
+
+#### 4. Editing the SPICE Model File for Simulation
+- Measured unit distance in layout grid.
+- Final edited SPICE file prepared for ngspice simulation.
+
+**Screenshots of SPICE File Editing and Grid Measurement**  
+
+---
+
+#### 5. Post-layout ngspice Simulations
+```
+# Load SPICE file in ngspice for simulation
+ngspice sky130_inv.spice
+
+# Plotting output waveform
+plot y vs time a
+```
+
+**Screenshots of ngspice Run and Generated Plot**  
+- **Rise and Fall Transition Time Calculation**:
+  - Rise Transition Time = 63.96 ps
+  - Fall Transition Time = 41.9 ps
+- **Cell Delay Calculations**:
+  - Rise Cell Delay = 61.36 ps
+  - Fall Cell Delay = 20 ps
+
+---
+
+#### 6. Identify and Fix Issues in DRC Section of Old Magic Tech File
+
+- Link to Sky130 Periphery Rules: [Skywater PDK Documentation](https://skywater-pdk.readthedocs.io/en/main/rules/periphery.html)
+
+```
+# Change to home directory
+cd
+
+# Download and extract lab files
+wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz
+tar xfz drc_tests.tgz
+
+# Navigate to extracted directory
+cd drc_tests
+
+# View .magicrc file
+gvim .magicrc
+
+# Open Magic tool with better graphics
+magic -d XR &
+```
+
+**Screenshots of Commands Run and Corrected DRC Rules**  
+- **Incorrectly Implemented poly.9, difftap.2, and nwell.4 Rules**:
+  - Loaded updated `sky130A.tech` file.
+  - Verified corrections using `drc check` and `drc why` commands.
+
+- **Commands in tkcon Window**:
+  ```
+  tech load sky130A.tech
+  drc check
+  drc why
+  ```
+- **Screenshots of Magic with Corrected DRC Implementations**
+```
+
+</details>
