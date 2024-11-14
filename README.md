@@ -5049,4 +5049,76 @@ Screenshots of commands run and timing report generated
 ![118](https://github.com/user-attachments/assets/3ef4330b-9b7d-4a72-8ace-1d539de64f36)
 
 </details>
+<details>
+	<summary> Day 5</summary>
+	<br>
+
+# Section 5 - Final steps for RTL2GDS using tritonRoute and openSTA
+## Theory
+## Implementation
+## Section 5 tasks:-
+Perform generation of Power Distribution Network (PDN) and explore the PDN layout.
+Perfrom detailed routing using TritonRoute.
+Post-Route parasitic extraction using SPEF extractor.
+Post-Route OpenSTA timing analysis with the extracted parasitics of the route.
+1. Perform generation of Power Distribution Network (PDN) and explore the PDN layout.
+Commands to perform all necessary stages up until now
+```
+# Change directory to openlane flow directory
+cd Desktop/work/tools/openlane_working_dir/openlane
+
+# alias docker='docker run -it -v $(pwd):/openLANE_flow -v $PDK_ROOT:$PDK_ROOT -e PDK_ROOT=$PDK_ROOT -u $(id -u $USER):$(id -g $USER) efabless/openlane:v0.21'
+# Since we have aliased the long command to 'docker' we can invoke the OpenLANE flow docker sub-system by just running this command
+docker
+```
+```
+# Now that we have entered the OpenLANE flow contained docker sub-system we can invoke the OpenLANE flow in the Interactive mode using the following command
+./flow.tcl -interactive
+
+# Now that OpenLANE flow is open we have to input the required packages for proper functionality of the OpenLANE flow
+package require openlane 0.9
+
+# Now the OpenLANE flow is ready to run any design and initially we have to prep the design creating some necessary files and directories for running a specific design which in our case is 'picorv32a'
+prep -design picorv32a
+
+# Addiitional commands to include newly added lef to openlane flow merged.lef
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+# Command to set new value for SYNTH_STRATEGY
+set ::env(SYNTH_STRATEGY) "DELAY 3"
+
+# Command to set new value for SYNTH_SIZING
+set ::env(SYNTH_SIZING) 1
+
+# Now that the design is prepped and ready, we can run synthesis using following command
+run_synthesis
+
+# Following commands are alltogather sourced in "run_floorplan" command
+init_floorplan
+place_io
+tap_decap_or
+
+# Now we are ready to run placement
+run_placement
+
+# Incase getting error
+unset ::env(LIB_CTS)
+
+# With placement done we are now ready to run CTS
+run_cts
+
+# Now that CTS is done we can do power distribution network
+gen_pdn
+```
+Screenshots of power distribution network run
+![119](https://github.com/user-attachments/assets/78a9b047-b98a-4d34-9f81-e5c2ad25434b)
+![120](https://github.com/user-attachments/assets/83bd72b9-44d5-46a1-9166-2ebcaad0a235)
+![121](https://github.com/user-attachments/assets/3d638760-e8dc-4e3f-9509-b0ce1db94460)
+![122](https://github.com/user-attachments/assets/8a1f2752-3a11-4c79-8272-be8e67c49e79)
+![123](https://github.com/user-attachments/assets/abf817f8-69f0-4c87-ab43-27aae567f1b0)
+![124](https://github.com/user-attachments/assets/d8eb112f-e617-4d88-9938-a185a577f8b1)
+
+
+</details>
 </details>
