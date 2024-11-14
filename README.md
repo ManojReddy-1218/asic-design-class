@@ -4564,9 +4564,6 @@ drc check
 drc why
 ```
 
-**Screenshot of Magic Window:**
-
-
 ---
 
 ### Issue 3: Incorrect `nwell.4` Rule
@@ -4574,8 +4571,6 @@ drc why
 
 **Correction Procedure:**
 - Fixed the implementation of the `nwell.4` rule and updated the `sky130A.tech` file.
-
-**Screenshots:**
 - Nwell rules correction: 
 - Violations before fix: 
 
@@ -4606,5 +4601,159 @@ drc why
 The above steps detail how to download the old Skywater process tech files, identify issues in the DRC rules, correct the faulty rules, and validate the corrections using Magic's DRC commands. These fixes ensure adherence to the Sky130 periphery rules.
 
 
+</details>
+<details>
+	<summary> Day 4</summary>
+	<br>
+
+ ### Section 4 - Pre-layout timing analysis and importance of good clock tree (22/03/2024 - 24/03/2024)
+
+**Theory**  
+Implementation
+
+---
+
+### Section 4 tasks:
+- Fix up small DRC errors and verify the design is ready to be inserted into our flow.
+- Save the finalized layout with custom name and open it.
+- Generate LEF from the layout.
+- Copy the newly generated LEF and associated required lib files to `picorv32a` design `src` directory.
+- Edit `config.tcl` to change lib file and add the new extra LEF into the OpenLane flow.
+- Run OpenLane flow synthesis with newly inserted custom inverter cell.
+- Remove/reduce the newly introduced violations with the introduction of custom inverter cell by modifying design parameters.
+- Once synthesis has accepted our custom inverter, run floorplan and placement, and verify the cell is accepted in PnR flow.
+- Perform Post-Synthesis timing analysis with OpenSTA tool.
+- Make timing ECO fixes to remove all violations.
+- Replace the old netlist with the new netlist generated after timing ECO fix and implement the floorplan, placement, and CTS.
+- Post-CTS OpenROAD timing analysis.
+- Explore post-CTS OpenROAD timing analysis by removing `sky130_fd_sc_hd__clkbuf_1` cell from clock buffer list variable `CTS_CLK_BUFFER_LIST`.
+
+---
+### Commands and Procedures
+
+```bash
+# Step 1: Fix up small DRC errors
+# Conditions to verify before moving forward with custom designed cell layout:
+# Condition 1: The input and output ports of the standard cell should lie on the intersection of the vertical and horizontal tracks.
+# Condition 2: Width of the standard cell should be odd multiples of the horizontal track pitch.
+# Condition 3: Height of the standard cell should be even multiples of the vertical track pitch.
+
+# Open the custom inverter layout
+```
+```
+cd Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign
+magic -T sky130A.tech sky130_man.mag &
+```
+
+# Commands for tkcon window to set grid as tracks of locali layer
+```
+help grid
+grid 0.46um 0.34um 0.23um 0.17um
+```
+![59](https://github.com/user-attachments/assets/d45e2872-ba91-4bc3-b721-a53cbb998de3)
+Condition 1 verified
+![60](https://github.com/user-attachments/assets/291f465f-4db4-495d-9f7d-ce8346da6679)
+Condition 2 verified
+		Horizontal track pitch = 0.46um
+![61](https://github.com/user-attachments/assets/80d85ba7-e784-4f51-8d10-af30100df0c9)
+		width of standard cell = 1.38um
+Condition 3 verified
+		vertical track pitch = 0.34um
+![62](https://github.com/user-attachments/assets/62d07146-7750-467e-91e4-871b6f12f147)
+		Height of standardcell = 2.72um
+
+# Step 2: Save the finalized layout with custom name and open it
+```
+save sky130_man.mag
+magic -T sky130A.tech sky130_man.mag &
+```
+# Step 3: Generate LEF from the layout
+```
+lef write
+```
+![63](https://github.com/user-attachments/assets/442085ee-d009-4542-a4fb-ddbef8bb63b9)
+
+Screenshot of newly created lef file:
+![64](https://github.com/user-attachments/assets/bd266eff-8e23-4575-8853-a1066aaee6fa)
+
+# Step 4: Copy the newly generated LEF and lib files to 'picorv32a' design 'src' directory
+```
+cp sky130_man.lef ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+ls ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+cp libs/sky130_fd_sc_hd__* ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/
+```
+![65](https://github.com/user-attachments/assets/0681c0c0-70be-4895-988e-4c37987a11fb)
+
+# Step 5: Edit 'config.tcl' to change lib file and add the new extra LEF
+```
+set ::env(LIB_SYNTH) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+set ::env(LIB_FASTEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__fast.lib"
+set ::env(LIB_SLOWEST) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__slow.lib"
+set ::env(LIB_TYPICAL) "$::env(OPENLANE_ROOT)/designs/picorv32a/src/sky130_fd_sc_hd__typical.lib"
+set ::env(EXTRA_LEFS) [glob $::env(OPENLANE_ROOT)/designs/$::env(DESIGN_NAME)/src/*.lef]
+```
+
+# Step 6: Run OpenLane flow synthesis with newly inserted custom inverter cell
+```
+cd Desktop/work/tools/openlane_working_dir/openlane
+docker
+./flow.tcl -interactive
+package require openlane 0.9
+prep -design picorv32a
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+run_synthesis
+```
+![66](https://github.com/user-attachments/assets/2adbf295-f441-4a67-97e9-6f7af56c84b3)
+![67](https://github.com/user-attachments/assets/6fa7982b-73b1-4d9f-9859-4a8f87dee163)
+![68](https://github.com/user-attachments/assets/be5eb0bc-51b2-4f1c-8089-dc6c978221e1)
+
+# Step 7: Remove/reduce the newly introduced violations
+```
+prep -design picorv32a -tag 24-03_10-03 -overwrite
+set ::env(SYNTH_SIZING) 1
+run_synthesis
+```
+![69](https://github.com/user-attachments/assets/418172c3-a2a6-461e-882a-04d2a1ccc7be)
+![70](https://github.com/user-attachments/assets/585a4509-2391-45dc-afc1-83d89fdc1dd5)
+![71](https://github.com/user-attachments/assets/ed3238d6-ea8f-46d8-b550-e97a717d0ffa)
+![72](https://github.com/user-attachments/assets/b1612acd-59ce-4fc8-a1b5-02390a190c8b)
+
+# Step 8: Once synthesis has accepted the custom inverter, run floorplan and placement
+```
+run_floorplan
+run_placement
+```
+![74](https://github.com/user-attachments/assets/b583d124-21d0-425f-b091-cd93914e8bd3)
+![75](https://github.com/user-attachments/assets/3036c5a8-4f42-49dc-9e5b-6d2d948896c7)
+![76](https://github.com/user-attachments/assets/db71553f-4ed0-44a7-be29-3fc40a22b16f)
+```
+# Follwing commands are alltogather sourced in "run_floorplan" command
+init_floorplan
+place_io
+tap_decap_or
+```
+![77](https://github.com/user-attachments/assets/998f33bd-913d-4c4b-b169-140791612781)
+![78](https://github.com/user-attachments/assets/edc09227-406b-4387-8732-c253b8b3b4b7)
+![79](https://github.com/user-attachments/assets/a77ece86-279b-40c1-902b-5c778f1cbc99)
+
+# Step 9: Perform Post-Synthesis timing analysis with OpenSTA
+```
+cd Desktop/work/tools/openlane_working_dir/openlane
+docker
+./flow.tcl -interactive
+package require openlane 0.9
+prep -design picorv32a
+add_lefs -src $lefs
+set ::env(SYNTH_SIZING) 1
+sta pre_sta.conf
+```
+# Step 10: Make timing ECO fixes
+```
+prep -design picorv32a -tag 25-03_18-52 -overwrite
+set ::env(SYNTH_SIZING) 1
+set ::env(SYNTH_MAX_FANOUT) 4
+run_synthesis
+```
 </details>
 </details>
