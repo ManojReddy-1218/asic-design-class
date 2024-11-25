@@ -5219,3 +5219,127 @@ Screenshots of commands run and timing report generated
 
 </details>
 </details>
+<details>
+	<summary>ASIC Lab 13</summary>
+	<br>
+
+ # Installing and Setting Up ORFS  
+```
+git clone --recursive https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts .  
+cd OpenRoad  
+sudo ./setup.sh  
+./build_openroad.sh --local  
+```
+![Screenshot from 2024-11-25 23-46-41](https://github.com/user-attachments/assets/4be65a2e-0c62-4c43-8c37-23d2a60ed85b)
+![Screenshot from 2024-11-25 23-56-11](https://github.com/user-attachments/assets/bc269884-487d-4a28-b325-c86e80494dda)
+
+# Verify Installation  
+```
+source ./env.sh  
+yosys -help  
+openroad -help  
+cd flow  
+make  
+```
+![Screenshot from 2024-11-26 00-01-22](https://github.com/user-attachments/assets/3279eeb5-cc44-4a5f-8fb8-4199cbbc65e1)
+![Screenshot from 2024-11-26 00-01-39](https://github.com/user-attachments/assets/df354a15-1c6c-4618-868d-cf8abd96e695)
+![Screenshot from 2024-11-26 00-02-34](https://github.com/user-attachments/assets/cceede71-e204-44d6-8eab-15bdb6669d33)
+
+# Expected Output: 1. Successful execution of `make`.  
+# To view the final GUI:  
+```
+make gui_final  
+```
+![Screenshot from 2024-11-26 00-02-48](https://github.com/user-attachments/assets/ec58a99f-990c-429d-9531-fa2453d0e045)
+
+# Expected Output: 2. OpenROAD GUI opens with the design loaded.  
+
+### ORFS Directory Structure and File Formats  
+### `OpenROAD-flow-scripts` Directory:  
+### - `docker`: Contains Docker installation scripts and related files.  
+### - `docs`: Documentation for OpenROAD tools and flow scripts.  
+### - `flow`: Files to run the RTL-to-GDS flow.  
+### - `jenkins`: Regression tests for each build update.  
+### - `tools`: All tools required for RTL-to-GDS flow.  
+### - `etc`: Dependency installer scripts and other related files.  
+### - `setup_env.sh`: Source file to set up OpenROAD rules for RTL-to-GDS flow.  
+
+### Navigate to the `flow` Directory:  
+### - `design`: Contains built-in RTL-to-GDS flow examples for various technology nodes.  
+### - `makefile`: Automates the flow setup.  
+### - `platform`: Libraries, LEF files, GDS, and more for different technology nodes.  
+### - `tutorials`: Tutorial resources.  
+### - `util`: Utility scripts and files.  
+### - `scripts`: Custom scripts used in the flow.  
+
+### Automated RTL-to-GDS Flow for VSDBabySoC  
+
+# Initial Setup:  
+```
+mkdir -p OpenROAD-flow-scripts/flow/designs/sky130hd/vsdbabysoc  
+```
+### Copy the following folders from the VSDBabySoC folder into this directory:  
+### - `gds`: Contains `avsddac.gds` and `avsdpll.gds`.  
+### - `include`: Includes header files like `sandpiper.vh`, `sandpiper_gen.vh`, etc.  
+### - `lef`: Contains LEF files such as `avsddac.lef` and `avsdpll.lef`.  
+### - `lib`: Library files such as `avsddac.lib` and `avsdpll.lib`.  
+### Copy the constraints file `vsdbabysoc_synthesis.sdc` into the directory.  
+### Copy the files `macro.cfg` and `pin_order.cfg` into the directory.  
+
+# Setup Environment:  
+```
+cd OpenRoad  
+source env.sh  
+cd flow  
+```
+![Screenshot from 2024-11-26 00-18-05](https://github.com/user-attachments/assets/1cd97a41-472d-4391-abfb-f9b5d25f5d53)
+
+# Commands for Synthesis:  
+```
+make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk synth  
+```
+![Screenshot from 2024-11-26 00-18-40](https://github.com/user-attachments/assets/08f3c1db-a1f8-4e27-a2bf-157395e72479)
+
+### Expected Outputs:  
+### 5. Synthesis netlist generated.  
+### 6. Synthesis log available for review.  
+### 7. Check synthesis results for correctness.  
+### 8. Obtain synthesis statistics.  
+
+### Commands for Floorplan:  
+### Generate the floorplan:  
+```
+make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk floorplan  
+```
+![Screenshot from 2024-11-26 00-19-35](https://github.com/user-attachments/assets/5ecaa319-8b03-4fa7-adc4-a794a933e826)
+
+# View the floorplan in GUI:  
+```
+make gui_floorplan
+```
+![Screenshot from 2024-11-26 00-20-08](https://github.com/user-attachments/assets/ced304ff-748d-4d77-8f6d-1c9054404a76)
+![Screenshot from 2024-11-26 00-20-37](https://github.com/user-attachments/assets/811b2a38-c736-4f87-9bc9-93b9a3e96d46)
+
+```
+make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk gui_floorplan  
+```
+![Screenshot from 2024-11-26 00-21-51](https://github.com/user-attachments/assets/5f354a33-d36f-4eac-ae15-3d4f53a75ce3)
+![Screenshot from 2024-11-26 00-22-51](https://github.com/user-attachments/assets/c387e71b-85cd-4707-ba7b-c10b1cefbf64)
+![Screenshot from 2024-11-26 00-23-13](https://github.com/user-attachments/assets/e0f6ab3d-c119-46a8-9e95-e87f9639b069)
+```
+make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk place
+```
+![Screenshot from 2024-11-26 00-23-57](https://github.com/user-attachments/assets/31de0cb9-a3cb-4375-9999-9fe6134b3e53)
+![Screenshot from 2024-11-26 00-25-44](https://github.com/user-attachments/assets/fa0652bf-6fe6-47e8-a4d9-5325d101d97e)
+![Screenshot from 2024-11-26 00-25-05](https://github.com/user-attachments/assets/3a37d042-921b-4e43-96b9-deb29248ca6d)
+```
+make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk cts
+```
+![Screenshot from 2024-11-26 00-26-27](https://github.com/user-attachments/assets/496b341e-49dc-4c46-b175-be3acb434850)
+```
+make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk route
+```
+![Screenshot from 2024-11-26 00-31-42](https://github.com/user-attachments/assets/85c1fff3-3d59-4d35-b069-11b5ae50981a)
+![Screenshot from 2024-11-26 00-31-48](https://github.com/user-attachments/assets/fa2d936d-7408-4d52-9de8-f1baa8dc5719)
+
+</details>
