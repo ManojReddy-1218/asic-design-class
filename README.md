@@ -5305,6 +5305,13 @@ make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk synth
 ### 6. Synthesis log available for review.  
 ### 7. Check synthesis results for correctness.  
 ### 8. Obtain synthesis statistics.  
+![Screenshot from 2024-11-26 03-03-41](https://github.com/user-attachments/assets/026f7675-ea94-4454-8c97-9501cfdfcd10)
+![Screenshot from 2024-11-26 03-05-22](https://github.com/user-attachments/assets/54189c73-5b91-4f4c-84ca-edca41078a40)
+![Screenshot from 2024-11-26 03-05-51](https://github.com/user-attachments/assets/4b9653ae-126f-4dec-8421-c21081536b8a)
+![Screenshot from 2024-11-26 03-06-00](https://github.com/user-attachments/assets/0e1062c3-3c11-42e1-8047-8e6b8ac05d71)
+![Screenshot from 2024-11-26 03-07-22](https://github.com/user-attachments/assets/8a36ac97-3f7e-4c36-9a57-77204aeb18c7)
+![Screenshot from 2024-11-26 03-07-27](https://github.com/user-attachments/assets/67647398-3223-40ae-9a67-142796c1ec90)
+![Screenshot from 2024-11-26 03-07-54](https://github.com/user-attachments/assets/f972cf3a-2be7-4e00-abe1-617c85ccfc06)
 
 ### Commands for Floorplan:  
 ### Generate the floorplan:  
@@ -5333,13 +5340,43 @@ make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk place
 ![Screenshot from 2024-11-26 00-25-44](https://github.com/user-attachments/assets/fa0652bf-6fe6-47e8-a4d9-5325d101d97e)
 ![Screenshot from 2024-11-26 00-25-05](https://github.com/user-attachments/assets/3a37d042-921b-4e43-96b9-deb29248ca6d)
 ```
+make gui_place
+```
+![Screenshot from 2024-11-26 03-10-04](https://github.com/user-attachments/assets/8414faf6-2d90-4070-ad2a-837de583f880)
+![Screenshot from 2024-11-26 03-10-42](https://github.com/user-attachments/assets/7db116fb-5db7-4f39-aeed-6845aad814dc)
+![Screenshot from 2024-11-26 03-11-05](https://github.com/user-attachments/assets/1fb15f37-9ce8-4984-9f11-3b822b9ce72d)
+![Screenshot from 2024-11-26 03-11-22](https://github.com/user-attachments/assets/99bbba1f-0321-49ff-b32b-22258c889b9c)
+
+```
 make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk cts
 ```
 ![Screenshot from 2024-11-26 00-26-27](https://github.com/user-attachments/assets/496b341e-49dc-4c46-b175-be3acb434850)
+```
+make gui_cts
+```
+![Screenshot from 2024-11-26 03-11-48](https://github.com/user-attachments/assets/208a16cc-c865-464f-a150-6b8b259028ee)
+![Screenshot from 2024-11-26 03-12-23](https://github.com/user-attachments/assets/186538f2-3892-447b-96e8-64ea9edff5da)
+
 ```
 make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk route
 ```
 ![Screenshot from 2024-11-26 00-31-42](https://github.com/user-attachments/assets/85c1fff3-3d59-4d35-b069-11b5ae50981a)
 ![Screenshot from 2024-11-26 00-31-48](https://github.com/user-attachments/assets/fa2d936d-7408-4d52-9de8-f1baa8dc5719)
+```
+make gui_route
+```
+![Screenshot from 2024-11-26 03-14-02](https://github.com/user-attachments/assets/72aee8f1-397e-42a0-ae25-0fac612c89bf)
+![Screenshot from 2024-11-26 03-14-08](https://github.com/user-attachments/assets/4c07b040-1a7e-41b5-8c00-50c347b88fe4)
+```
+make gui_final
+```
+![Screenshot from 2024-11-26 03-14-32](https://github.com/user-attachments/assets/a1b0568c-d344-418e-aee7-d57cb8c0c082)
+![Screenshot from 2024-11-26 03-15-02](https://github.com/user-attachments/assets/ef3a7dda-57c6-4a43-8a4e-d29d823ec514)
+![Screenshot from 2024-11-26 03-15-29](https://github.com/user-attachments/assets/58e13645-e175-4632-9353-95ef5be8f8d0)
+![Screenshot from 2024-11-26 03-15-58](https://github.com/user-attachments/assets/fa66805e-b90a-4f7c-adc5-85df47301253)
+![Screenshot from 2024-11-26 03-16-05](https://github.com/user-attachments/assets/9f45a0b7-2b0a-4384-b16a-da543b8fee79)
+![Screenshot from 2024-11-26 03-16-56](https://github.com/user-attachments/assets/268e8a28-2206-4756-ac42-65f3bc898ae0)
+![Screenshot from 2024-11-26 03-17-30](https://github.com/user-attachments/assets/6f0a552b-88fe-47ef-99d4-e4d1dd5cd17f)
+![Screenshot from 2024-11-26 03-17-40](https://github.com/user-attachments/assets/82ad61df-74d3-41a1-8fa2-9ed50fb31c7f)
 
 </details>
