@@ -5352,7 +5352,6 @@ make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk place
 ```
 make gui_place
 ```
-![Screenshot from 2024-11-26 03-10-04](https://github.com/user-attachments/assets/8414faf6-2d90-4070-ad2a-837de583f880)
 ![Screenshot from 2024-11-26 06-50-37](https://github.com/user-attachments/assets/972b98c1-81a0-4894-b4bf-9eb55c9bd777)
 ![Screenshot from 2024-11-26 06-51-14](https://github.com/user-attachments/assets/271c5dcc-4d33-409d-a2c6-ff283e248f06)
 #### Place Report:
@@ -5369,7 +5368,6 @@ make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk cts
 ```
 make gui_cts
 ```
-![Screenshot from 2024-11-26 03-11-48](https://github.com/user-attachments/assets/208a16cc-c865-464f-a150-6b8b259028ee)
 ![Screenshot from 2024-11-26 06-57-30](https://github.com/user-attachments/assets/f307cf47-1046-4148-88ae-b735b7e64bcb)
 ![Screenshot from 2024-11-26 06-57-59](https://github.com/user-attachments/assets/a4bf8539-8bd3-4f38-a6b5-2db840bb365c)
 #### CTS Report:
@@ -5389,18 +5387,15 @@ make DESIGN_CONFIG=./designs/sky130hd/vsdbabysoc/config.mk route
 ```
 make gui_route
 ```
-![Screenshot from 2024-11-26 03-14-02](https://github.com/user-attachments/assets/72aee8f1-397e-42a0-ae25-0fac612c89bf)
 ![Screenshot from 2024-11-26 03-14-08](https://github.com/user-attachments/assets/4c07b040-1a7e-41b5-8c00-50c347b88fe4)
 ```
 make gui_final
 ```
-![Screenshot from 2024-11-26 03-14-32](https://github.com/user-attachments/assets/a1b0568c-d344-418e-aee7-d57cb8c0c082)
 ![Screenshot from 2024-11-26 03-15-02](https://github.com/user-attachments/assets/ef3a7dda-57c6-4a43-8a4e-d29d823ec514)
 ![Screenshot from 2024-11-26 03-15-29](https://github.com/user-attachments/assets/58e13645-e175-4632-9353-95ef5be8f8d0)
 ![Screenshot from 2024-11-26 03-15-58](https://github.com/user-attachments/assets/fa66805e-b90a-4f7c-adc5-85df47301253)
 ![Screenshot from 2024-11-26 03-16-05](https://github.com/user-attachments/assets/9f45a0b7-2b0a-4384-b16a-da543b8fee79)
 ![Screenshot from 2024-11-26 03-16-56](https://github.com/user-attachments/assets/268e8a28-2206-4756-ac42-65f3bc898ae0)
-![Screenshot from 2024-11-26 03-17-30](https://github.com/user-attachments/assets/6f0a552b-88fe-47ef-99d4-e4d1dd5cd17f)
 ![Screenshot from 2024-11-26 03-17-40](https://github.com/user-attachments/assets/82ad61df-74d3-41a1-8fa2-9ed50fb31c7f)
 
 </details>
