@@ -5397,5 +5397,8 @@ make gui_final
 ![Screenshot from 2024-11-26 03-16-05](https://github.com/user-attachments/assets/9f45a0b7-2b0a-4384-b16a-da543b8fee79)
 ![Screenshot from 2024-11-26 03-16-56](https://github.com/user-attachments/assets/268e8a28-2206-4756-ac42-65f3bc898ae0)
 ![Screenshot from 2024-11-26 03-17-40](https://github.com/user-attachments/assets/82ad61df-74d3-41a1-8fa2-9ed50fb31c7f)
+#### QOR Report:
+![WhatsApp Image 2024-11-26 at 8 07 36 PM](https://github.com/user-attachments/assets/96d256a3-96e0-42c4-8e6c-d4009a9754d3)
+![WhatsApp Image 2024-11-26 at 8 11 31 PM](https://github.com/user-attachments/assets/e5f31568-1097-44c8-8605-b478386f801d)
 
 </details>
